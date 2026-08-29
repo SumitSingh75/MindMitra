@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MindMitra - AI Cognitive Companion</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="topbar">
+
+    <div class="brand">
+        🧠 <span>MindMitra</span>
+    </div>
+
+    <div class="top-actions">
+
+        <button onclick="setLanguage('en')">
+            English
+        </button>
+
+        <button onclick="setLanguage('hi')">
+            हिंदी
+        </button>
+
+        <button class="emergency-btn" onclick="emergencyHelp()">
+            🆘 Emergency
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= SMALL HERO ================= -->
+
+<section class="hero">
+
+    <div>
+
+        <h1 id="welcomeTitle">
+            Welcome to MindMitra
+        </h1>
+
+        <p id="welcomeText">
+            AI-powered cognitive support, memory assistance & daily wellness
+        </p>
+
+    </div>
+
+    <div class="status-card">
+
+        <span class="online-dot"></span>
+
+        <span id="aiStatus">
+            AI Assistant Active
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav class="navigation">
+
+    <button onclick="showSection('home')">
+        🏠 <span data-en="Home" data-hi="होम">Home</span>
+    </button>
+
+    <button onclick="showSection('games')">
+        🧠 <span data-en="Games" data-hi="खेल">Games</span>
+    </button>
+
+    <button onclick="showSection('reminders')">
+        🔔 <span data-en="Reminders" data-hi="रिमाइंडर">Reminders</span>
+    </button>
+
+    <button onclick="showSection('fitness')">
+        🏃 <span data-en="Fitness" data-hi="फिटनेस">Fitness</span>
+    </button>
+
+    <button onclick="showSection('yoga')">
+        🧘 <span data-en="Yoga" data-hi="योग">Yoga</span>
+    </button>
+
+    <button onclick="showSection('nearby')">
+        🗺️ <span data-en="Nearby Help" data-hi="नज़दीकी सहायता">
+            Nearby Help
+        </span>
+    </button>
+
+    <button onclick="showSection('dashboard')">
+        📊 <span data-en="Dashboard" data-hi="डैशबोर्ड">
+            Dashboard
+        </span>
+    </button>
+
+</nav>
+
+
+<main>
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home" class="section active">
+
+    <div class="welcome-small">
+
+        <div>
+
+            <span class="small-label">
+                <span data-en="TODAY'S SUPPORT"
+                      data-hi="आज की सहायता">
+                    TODAY'S SUPPORT
+                </span>
+            </span>
+
+            <h2 id="homeGreeting">
+                Good Morning 👋
+            </h2>
+
+            <p id="homeDescription">
+                Let's keep your mind and body active today.
+            </p>
+
+        </div>
+
+        <div class="daily-score">
+
+            <strong id="homeScore">
+                0%
+            </strong>
+
+            <span data-en="Daily Progress"
+                  data-hi="दैनिक प्रगति">
+                Daily Progress
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK ACCESS -->
+
+    <h2 class="section-title"
+        data-en="Quick Access"
+        data-hi="त्वरित सहायता">
+        Quick Access
+    </h2>
+
+
+    <div class="feature-grid">
+
+        <div class="feature-card"
+             onclick="showSection('games')">
+
+            <div class="feature-icon">
+                🧠
+            </div>
+
+            <div>
+
+                <h3 data-en="Cognitive Games"
+                    data-hi="संज्ञानात्मक खेल">
+                    Cognitive Games
+                </h3>
+
+                <p data-en="Memory, attention & recognition"
+                   data-hi="स्मृति, ध्यान और पहचान">
+                    Memory, attention & recognition
+                </p>
+
+            </div>
+
+            <span class="arrow">→</span>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="showSection('reminders')">
+
+            <div class="feature-icon">
+                🔔
+            </div>
+
+            <div>
+
+                <h3 data-en="Memory Assistant"
+                    data-hi="स्मृति सहायक">
+                    Memory Assistant
+                </h3>
+
+                <p data-en="Daily reminders & activities"
+                   data-hi="दैनिक रिमाइंडर और गतिविधियाँ">
+                    Daily reminders & activities
+                </p>
+
+            </div>
+
+            <span class="arrow">→</span>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="showSection('fitness')">
+
+            <div class="feature-icon">
+                🚶
+            </div>
+
+            <div>
+
+                <h3 data-en="Walking Tracker"
+                    data-hi="चलने की निगरानी">
+                    Walking Tracker
+                </h3>
+
+                <p>
+                    <span id="homeDistance">0.00</span>
+
+                    <span data-en="km today"
+                          data-hi="किमी आज">
+                        km today
+                    </span>
+                </p>
+
+            </div>
+
+            <span class="arrow">→</span>
+
+        </div>
+
+
+        <div class="feature-card"
+             onclick="showSection('nearby')">
+
+            <div class="feature-icon">
+                🗺️
+            </div>
+
+            <div>
+
+                <h3 data-en="Nearby Help"
+                    data-hi="नज़दीकी सहायता">
+                    Nearby Help
+                </h3>
+
+                <p data-en="ATM, hospital, petrol & more"
+                   data-hi="एटीएम, अस्पताल, पेट्रोल और अन्य">
+                    ATM, hospital, petrol & more
+                </p>
+
+            </div>
+
+            <span class="arrow">→</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- SMALL AI INSIGHT -->
+
+    <div class="ai-insight">
+
+        <div class="ai-icon">
+            🤖
+        </div>
+
+        <div>
+
+            <span data-en="AI INSIGHT"
+                  data-hi="AI सुझाव">
+                AI INSIGHT
+            </span>
+
+            <p id="aiHomeMessage">
+                Complete a cognitive game to receive a personalized recommendation.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SMALL AI CHAT -->
+
+    <div class="mini-ai">
+
+        <div class="mini-ai-title">
+            🤖
+            <span data-en="Ask MindMitra"
+                  data-hi="MindMitra से पूछें">
+                Ask MindMitra
+            </span>
+        </div>
+
+        <div class="mini-ai-row">
+
+            <input
+                id="aiQuestion"
+                type="text"
+                placeholder="Ask something..."
+                data-placeholder-en="Ask something..."
+                data-placeholder-hi="कुछ पूछें..."
+            >
+
+            <button onclick="askMindMitra()">
+                ➤
+            </button>
+
+        </div>
+
+        <p id="aiReply" class="ai-reply">
+        </p>
+
+    </div>
+
+
+    <!-- CONTACT -->
+
+    <div class="contact-row">
+
+        <button onclick="contactDoctor()">
+            👨‍⚕️
+            <span data-en="Contact Doctor"
+                  data-hi="डॉक्टर से संपर्क">
+                Contact Doctor
+            </span>
+        </button>
+
+        <button onclick="contactCaregiver()">
+            👨‍👩‍👧
+            <span data-en="Contact Caregiver"
+                  data-hi="देखभालकर्ता से संपर्क">
+                Contact Caregiver
+            </span>
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     GAMES
+===================================================== -->
+
+<section id="games" class="section">
+
+    <div class="page-heading">
+
+        <div>
+
+            <span data-en="COGNITIVE TRAINING"
+                  data-hi="संज्ञानात्मक प्रशिक्षण">
+                COGNITIVE TRAINING
+            </span>
+
+            <h2>
+                🧠
+                <span data-en="AI Cognitive Games"
+                      data-hi="AI संज्ञानात्मक खेल">
+                    AI Cognitive Games
+                </span>
+            </h2>
+
+        </div>
+
+        <div class="level-badge">
+
+            <span data-en="AI Level"
+                  data-hi="AI स्तर">
+                AI Level
+            </span>
+
+            <strong id="difficultyLevel">
+                1
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <p class="description"
+       data-en="Play simple activities and MindMitra will adjust difficulty according to performance."
+       data-hi="सरल गतिविधियाँ खेलें और MindMitra आपके प्रदर्शन के अनुसार कठिनाई बदल देगा।">
+        Play simple activities and MindMitra will adjust difficulty according to performance.
+    </p>
+
+
+    <div class="game-grid">
+
+        <button class="game-card"
+                onclick="memoryGame()">
+
+            <span>🃏</span>
+
+            <strong data-en="Memory Cards"
+                    data-hi="स्मृति कार्ड">
+                Memory Cards
+            </strong>
+
+            <small data-en="Remember objects"
+                   data-hi="वस्तुओं को याद रखें">
+                Remember objects
+            </small>
+
+        </button>
+
+
+        <button class="game-card"
+                onclick="colorGame()">
+
+            <span>🎨</span>
+
+            <strong data-en="Color Memory"
+                    data-hi="रंग स्मृति">
+                Color Memory
+            </strong>
+
+            <small data-en="Remember color sequence"
+                   data-hi="रंगों का क्रम याद रखें">
+                Remember color sequence
+            </small>
+
+        </button>
+
+
+        <button class="game-card"
+                onclick="numberGame()">
+
+            <span>🔢</span>
+
+            <strong data-en="Number Sequence"
+                    data-hi="संख्या क्रम">
+                Number Sequence
+            </strong>
+
+            <small data-en="Find the missing number"
+                   data-hi="लुप्त संख्या खोजें">
+                Find the missing number
+            </small>
+
+        </button>
+
+
+        <button class="game-card"
+                onclick="pictureGame()">
+
+            <span>🖼️</span>
+
+            <strong data-en="Picture Recognition"
+                    data-hi="चित्र पहचान">
+                Picture Recognition
+            </strong>
+
+            <small data-en="Recognize familiar objects"
+                   data-hi="परिचित वस्तुओं को पहचानें">
+                Recognize familiar objects
+            </small>
+
+        </button>
+
+
+        <button class="game-card"
+                onclick="attentionGame()">
+
+            <span>👀</span>
+
+            <strong data-en="Attention Test"
+                    data-hi="ध्यान परीक्षण">
+                Attention Test
+            </strong>
+
+            <small data-en="Find the different object"
+                   data-hi="अलग वस्तु खोजें">
+                Find the different object
+            </small>
+
+        </button>
+
+    </div>
+
+
+    <div id="gameArea" class="game-area">
+
+        <div class="game-placeholder">
+
+            <div>🎮</div>
+
+            <h3 data-en="Select a game"
+                data-hi="एक खेल चुनें">
+                Select a game
+            </h3>
+
+            <p data-en="Your score will be analyzed by the AI difficulty system."
+               data-hi="आपके स्कोर का AI कठिनाई प्रणाली द्वारा विश्लेषण किया जाएगा।">
+                Your score will be analyzed by the AI difficulty system.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     REMINDERS
+===================================================== -->
+
+<section id="reminders" class="section">
+
+    <div class="page-heading">
+
+        <div>
+
+            <span data-en="MEMORY ASSISTANT"
+                  data-hi="स्मृति सहायक">
+                MEMORY ASSISTANT
+            </span>
+
+            <h2>
+                🔔
+                <span data-en="Daily Reminders"
+                      data-hi="दैनिक रिमाइंडर">
+                    Daily Reminders
+                </span>
+            </h2>
+
+        </div>
+
+        <div class="reminder-progress">
+
+            <strong id="reminderDone">
+                0
+            </strong>/5
+
+        </div>
+
+    </div>
+
+
+    <div class="reminder-grid">
+
+
+        <div class="reminder-card">
+
+            <div class="reminder-icon">
+                💊
+            </div>
+
+            <div>
+
+                <h3 data-en="Medicine"
+                    data-hi="दवा">
+                    Medicine
+                </h3>
+
+                <p data-en="Take medicine at 9:00 AM"
+                   data-hi="सुबह 9:00 बजे दवा लें">
+                    Take medicine at 9:00 AM
+                </p>
+
+            </div>
+
+            <button onclick="completeReminder(this)"
+                    data-en="Done"
+                    data-hi="पूरा">
+                Done
+            </button>
+
+        </div>
+
+
+        <div class="reminder-card">
+
+            <div class="reminder-icon">
+                💧
+            </div>
+
+            <div>
+
+                <h3 data-en="Water"
+                    data-hi="पानी">
+                    Water
+                </h3>
+
+                <p data-en="Drink water regularly"
+                   data-hi="नियमित रूप से पानी पिएं">
+                    Drink water regularly
+                </p>
+
+            </div>
+
+            <button onclick="completeReminder(this)"
+                    data-en="Done"
+                    data-hi="पूरा">
+                Done
+            </button>
+
+        </div>
+
+
+        <div class="reminder-card">
+
+            <div class="reminder-icon">
+                👨‍👩‍👧
+            </div>
+
+            <div>
+
+                <h3 data-en="Family"
+                    data-hi="परिवार">
+                    Family
+                </h3>
+
+                <p data-en="Family video call at 6:00 PM"
+                   data-hi="शाम 6:00 बजे परिवार से वीडियो कॉल">
+                    Family video call at 6:00 PM
+                </p>
+
+            </div>
+
+            <button onclick="completeReminder(this)"
+                    data-en="Done"
+                    data-hi="पूरा">
+                Done
+            </button>
+
+        </div>
+
+
+        <div class="reminder-card">
+
+            <div class="reminder-icon">
+                🍲
+            </div>
+
+            <div>
+
+                <h3 data-en="Meal"
+                    data-hi="भोजन">
+                    Meal
+                </h3>
+
+                <p data-en="Lunch at 1:00 PM"
+                   data-hi="दोपहर 1:00 बजे भोजन">
+                    Lunch at 1:00 PM
+                </p>
+
+            </div>
+
+            <button onclick="completeReminder(this)"
+                    data-en="Done"
+                    data-hi="पूरा">
+                Done
+            </button>
+
+        </div>
+
+
+        <div class="reminder-card">
+
+            <div class="reminder-icon">
+                📅
+            </div>
+
+            <div>
+
+                <h3 data-en="Appointment"
+                    data-hi="अपॉइंटमेंट">
+                    Appointment
+                </h3>
+
+                <p data-en="Doctor appointment tomorrow"
+                   data-hi="कल डॉक्टर की अपॉइंटमेंट">
+                    Doctor appointment tomorrow
+                </p>
+
+            </div>
+
+            <button onclick="completeReminder(this)"
+                    data-en="Done"
+                    data-hi="पूरा">
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FITNESS
+===================================================== -->
+
+<section id="fitness" class="section">
+
+    <div class="page-heading">
+
+        <div>
+
+            <span data-en="DAILY WELLNESS"
+                  data-hi="दैनिक स्वास्थ्य">
+                DAILY WELLNESS
+            </span>
+
+            <h2>
+                🏃
+                <span data-en="Physical Fitness"
+                      data-hi="शारीरिक फिटनेस">
+                    Physical Fitness
+                </span>
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="fitness-grid">
+
+        <div class="fitness-main">
+
+            <div class="fitness-header">
+
+                <div>
+
+                    <span data-en="WALKING TRACKER"
+                          data-hi="चलने की निगरानी">
+                        WALKING TRACKER
+                    </span>
+
+                    <h2>
+                        🚶
+                        <span data-en="Today's Walk"
+                              data-hi="आज की सैर">
+                            Today's Walk
+                        </span>
+                    </h2>
+
+                </div>
+
+                <div class="walking-icon">
+                    🚶
+                </div>
+
+            </div>
+
+
+            <div class="fitness-stats">
+
+                <div>
+
+                    <strong id="distance">
+                        0.00
+                    </strong>
+
+                    <small>KM</small>
+
+                </div>
+
+                <div>
+
+                    <strong id="steps">
+                        0
+                    </strong>
+
+                    <small data-en="STEPS"
+                          data-hi="कदम">
+                        STEPS
+                    </small>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        4
+                    </strong>
+
+                    <small data-en="GOAL KM"
+                          data-hi="लक्ष्य KM">
+                        GOAL KM
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div id="walkingProgress"></div>
+
+            </div>
+
+
+            <p id="locationStatus">
+                📍 Walking tracker is ready.
+            </p>
+
+
+            <button onclick="startWalking()">
+                ▶
+                <span data-en="Start Walking"
+                      data-hi="चलना शुरू करें">
+                    Start Walking
+                </span>
+            </button>
+
+            <button class="secondary"
+                    onclick="stopWalking()">
+                ⏹
+                <span data-en="Stop"
+                      data-hi="रोकें">
+                    Stop
+                </span>
+            </button>
+
+        </div>
+
+
+        <div class="fitness-side">
+
+            <h3>
+                🌿
+                <span data-en="Wellness Tips"
+                      data-hi="स्वास्थ्य सुझाव">
+                    Wellness Tips
+                </span>
+            </h3>
+
+            <div class="tip">
+                💧
+                <span data-en="Drink enough water"
+                      data-hi="पर्याप्त पानी पिएं">
+                    Drink enough water
+                </span>
+            </div>
+
+            <div class="tip">
+                🚶
+                <span data-en="Take regular walks"
+                      data-hi="नियमित रूप से चलें">
+                    Take regular walks
+                </span>
+            </div>
+
+            <div class="tip">
+                🧘
+                <span data-en="Practice gentle yoga"
+                      data-hi="हल्का योग करें">
+                    Practice gentle yoga
+                </span>
+            </div>
+
+            <div class="tip">
+                😴
+                <span data-en="Maintain a healthy sleep routine"
+                      data-hi="स्वस्थ नींद की दिनचर्या रखें">
+                    Maintain a healthy sleep routine
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     YOGA
+===================================================== -->
+
+<section id="yoga" class="section">
+
+    <div class="page-heading">
+
+        <div>
+
+            <span data-en="MINDFUL MOVEMENT"
+                  data-hi="सचेत गतिविधि">
+                MINDFUL MOVEMENT
+            </span>
+
+            <h2>
+                🧘
+                <span data-en="Yoga"
+                      data-hi="योग">
+                    Yoga
+                </span>
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="yoga-layout">
+
+        <div class="yoga-image-box">
+
+            <img id="yogaImage"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Tadasana.jpg/640px-Tadasana.jpg"
+                 alt="Tadasana Yoga Posture">
+
+        </div>
+
+
+        <div class="yoga-info">
+
+            <span data-en="YOGA POSTURE"
+                  data-hi="योग मुद्रा">
+                YOGA POSTURE
+            </span>
+
+            <h1 id="yogaName">
+                Tadasana
+            </h1>
+
+            <h2 id="yogaHindi">
+                ताड़ासन
+            </h2>
+
+            <p id="yogaInstruction">
+                Stand straight, keep your feet together and breathe slowly.
+            </p>
+
+
+            <div class="yoga-timer">
+
+                <span>⏱️</span>
+
+                <strong id="yogaTimer">
+                    30
+                </strong>
+
+                <span data-en="seconds"
+                      data-hi="सेकंड">
+                    seconds
+                </span>
+
+            </div>
+
+
+            <div class="yoga-buttons">
+
+                <button onclick="previousYoga()">
+                    ←
+                    <span data-en="Previous"
+                          data-hi="पिछला">
+                        Previous
+                    </span>
+                </button>
+
+                <button onclick="startYoga()">
+                    ▶
+                    <span data-en="Start"
+                          data-hi="शुरू">
+                        Start
+                    </span>
+                </button>
+
+                <button onclick="nextYoga()">
+                    <span data-en="Next"
+                          data-hi="अगला">
+                        Next
+                    </span>
+                    →
+                </button>
+
+            </div>
+
+
+            <p class="posture-count">
+
+                <span data-en="Posture"
+                      data-hi="मुद्रा">
+                    Posture
+                </span>
+
+                <span id="postureNumber">
+                    1
+                </span>
+
+                <span data-en="of 5"
+                      data-hi="में से 5">
+                    of 5
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEARBY
+===================================================== -->
+
+<section id="nearby" class="section">
+
+    <div class="page-heading">
+
+        <div>
+
+            <span data-en="SAFETY & DAILY TRAVEL"
+                  data-hi="सुरक्षा और दैनिक यात्रा">
+                SAFETY & DAILY TRAVEL
+            </span>
+
+            <h2>
+                🗺️
+                <span data-en="Nearby Help"
+                      data-hi="नज़दीकी सहायता">
+                    Nearby Help
+                </span>
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <p class="description"
+       data-en="Find useful places around your current location."
+       data-hi="अपने वर्तमान स्थान के आसपास उपयोगी स्थान खोजें।">
+        Find useful places around your current location.
+    </p>
+
+
+    <div class="place-grid">
+
+        <button onclick="findNearby('ATM')">
+            🏧
+            <strong data-en="ATM"
+                    data-hi="एटीएम">
+                ATM
+            </strong>
+        </button>
+
+        <button onclick="findNearby('Petrol Pump')">
+            ⛽
+            <strong data-en="Petrol"
+                    data-hi="पेट्रोल">
+                Petrol
+            </strong>
+        </button>
+
+        <button onclick="findNearby('Hospital')">
+            🏥
+            <strong data-en="Hospital"
+                    data-hi="अस्पताल">
+                Hospital
+            </strong>
+        </button>
+
+        <button onclick="findNearby('Pharmacy')">
+            💊
+            <strong data-en="Pharmacy"
+                    data-hi="फार्मेसी">
+                Pharmacy
+            </strong>
+        </button>
+
+        <button onclick="findNearby('Police Station')">
+            🚓
+            <strong data-en="Police"
+                    data-hi="पुलिस">
+                Police
+            </strong>
+        </button>
+
+        <button onclick="findNearby('Restaurant')">
+            🍽️
+            <strong data-en="Restaurant"
+                    data-hi="रेस्टोरेंट">
+                Restaurant
+            </strong>
+        </button>
+
+    </div>
+
+
+    <div class="map-box">
+
+        <div class="map-icon">
+            📍
+        </div>
+
+        <h2 data-en="Nearby Location"
+            data-hi="नज़दीकी स्थान">
+            Nearby Location
+        </h2>
+
+        <p id="mapResult"
+           data-en="Select a category to search nearby."
+           data-hi="नज़दीकी स्थान खोजने के लिए एक श्रेणी चुनें।">
+            Select a category to search nearby.
+        </p>
+
+        <button onclick="getLocation()">
+            📍
+            <span data-en="Use My Location"
+                  data-hi="मेरी लोकेशन इस्तेमाल करें">
+                Use My Location
+            </span>
+        </button>
+
+    </div>
+
+
+    <div class="travel-note">
+
+        💡
+
+        <strong data-en="Travel Assistance:"
+                data-hi="यात्रा सहायता:">
+            Travel Assistance:
+        </strong>
+
+        <span data-en="GPS can help locate the user when permission is given."
+              data-hi="अनुमति मिलने पर GPS उपयोगकर्ता का स्थान पता करने में सहायता कर सकता है।">
+            GPS can help locate the user when permission is given.
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dashboard" class="section">
+
+    <div class="page-heading">
+
+        <div>
+
+            <span data-en="CAREGIVER VIEW"
+                  data-hi="देखभालकर्ता दृश्य">
+                CAREGIVER VIEW
+            </span>
+
+            <h2>
+                📊
+                <span data-en="Performance Dashboard"
+                      data-hi="प्रदर्शन डैशबोर्ड">
+                    Performance Dashboard
+                </span>
+            </h2>
+
+        </div>
+
+        <div class="user-badge">
+
+            👴
+
+            <span data-en="Elderly User"
+                  data-hi="वरिष्ठ उपयोगकर्ता">
+                Elderly User
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+
+            <span>🧠</span>
+
+            <small data-en="Games Completed"
+                   data-hi="पूरे किए गए खेल">
+                Games Completed
+            </small>
+
+            <strong id="dashboardGames">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <span>🎯</span>
+
+            <small data-en="Average Score"
+                   data-hi="औसत स्कोर">
+                Average Score
+            </small>
+
+            <strong id="dashboardScore">
+                0%
+            </strong>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <span>🚶</span>
+
+            <small data-en="Walking"
+                   data-hi="चलना">
+                Walking
+            </small>
+
+            <strong id="dashboardWalk">
+                0 km
+            </strong>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <span>🔔</span>
+
+            <small data-en="Reminders"
+                   data-hi="रिमाइंडर">
+                Reminders
+            </small>
+
+            <strong id="dashboardReminders">
+                0/5
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="performance-box">
+
+        <h3>
+            🤖
+            <span data-en="AI Performance Analysis"
+                  data-hi="AI प्रदर्शन विश्लेषण">
+                AI Performance Analysis
+            </span>
+        </h3>
+
+
+        <div class="performance-line">
+
+            <span data-en="Current Difficulty"
+                  data-hi="वर्तमान कठिनाई">
+                Current Difficulty
+            </span>
+
+            <strong id="dashboardLevel">
+                Level 1
+            </strong>
+
+        </div>
+
+
+        <div class="performance-line">
+
+            <span data-en="Memory Performance"
+                  data-hi="स्मृति प्रदर्शन">
+                Memory Performance
+            </span>
+
+            <strong id="memoryStatus">
+                Not enough data
+            </strong>
+
+        </div>
+
+
+        <div class="performance-line">
+
+            <span data-en="AI Recommendation"
+                  data-hi="AI सुझाव">
+                AI Recommendation
+            </span>
+
+            <strong id="dashboardRecommendation">
+                Play a game to generate analysis.
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="doctor-box">
+
+        <div>
+
+            <h3>
+                👨‍⚕️
+                <span data-en="Doctor Connection"
+                      data-hi="डॉक्टर से संपर्क">
+                    Doctor Connection
+                </span>
+            </h3>
+
+            <p data-en="Doctor communication can be connected in the full application."
+               data-hi="पूर्ण एप्लिकेशन में डॉक्टर से संपर्क सुविधा जोड़ी जा सकती है।">
+                Doctor communication can be connected in the full application.
+            </p>
+
+        </div>
+
+        <button onclick="contactDoctor()">
+            📞
+            <span data-en="Contact Doctor"
+                  data-hi="डॉक्टर से संपर्क">
+                Contact Doctor
+            </span>
+        </button>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <strong>
+        🧠 MindMitra
+    </strong>
+
+    <p data-en="Play • Remember • Connect"
+       data-hi="खेलें • याद रखें • जुड़ें">
+        Play • Remember • Connect
+    </p>
+
+    <small data-en="MindMitra is a support and wellness platform, not a medical diagnosis or treatment system."
+           data-hi="MindMitra एक सहायता और स्वास्थ्य प्लेटफॉर्म है, चिकित्सा निदान या उपचार प्रणाली नहीं।">
+        MindMitra is a support and wellness platform, not a medical diagnosis or treatment system.
+    </small>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
