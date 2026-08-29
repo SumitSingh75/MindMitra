@@ -1,5 +1,5 @@
 /* =========================================
-   MINDMITRA JAVASCRIPT
+   MINDMITRA - COMPLETE JAVASCRIPT
 ========================================= */
 
 
@@ -13,6 +13,14 @@ let completedReminders = 0;
 
 let gamesCompleted = 0;
 let totalScore = 0;
+
+/*
+   Level 1 = very easy
+   Level 2 = easy
+   Level 3 = moderate
+   Level 4 = challenging
+   Level 5 = advanced
+*/
 let difficulty = 1;
 
 let watchID = null;
@@ -21,32 +29,21 @@ let totalDistance = 0;
 
 let selectedPlace = "";
 
+let colorSequence = [];
+let patternAnswerValue = null;
+
 
 /* =========================================
-   SECTION NAVIGATION
+   TRANSLATION
 ========================================= */
 
-function showSection(sectionId) {
-
-    document.querySelectorAll(".section").forEach(section => {
-        section.classList.remove("active");
-    });
-
-    const section = document.getElementById(sectionId);
-
-    if (section) {
-        section.classList.add("active");
-    }
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+function t(en, hi) {
+    return hindiMode ? hi : en;
 }
 
 
 /* =========================================
-   LANGUAGE SYSTEM
+   COMPLETE WEBSITE LANGUAGE SWITCH
 ========================================= */
 
 function setLanguage(language) {
@@ -57,30 +54,27 @@ function setLanguage(language) {
         hindiMode ? "hi" : "en";
 
 
+    /*
+       This is the important part.
+
+       Every element containing data-en and data-hi
+       will automatically change.
+    */
+
     document.querySelectorAll("[data-en]").forEach(element => {
 
-        const text = hindiMode
-            ? element.getAttribute("data-hi")
-            : element.getAttribute("data-en");
+        const english = element.getAttribute("data-en");
+        const hindi = element.getAttribute("data-hi");
 
-        if (text) {
-            element.innerText = text;
+        if (english && hindi) {
+            element.innerText =
+                hindiMode ? hindi : english;
         }
 
     });
 
 
-    const input =
-        document.getElementById("aiQuestion");
-
-    if (input) {
-
-        input.placeholder =
-            hindiMode
-                ? "MindMitra से पूछें..."
-                : "Ask MindMitra...";
-    }
-
+    /* Header / Hero */
 
     const welcomeTitle =
         document.getElementById("welcomeTitle");
@@ -88,9 +82,10 @@ function setLanguage(language) {
     if (welcomeTitle) {
 
         welcomeTitle.innerText =
-            hindiMode
-                ? "MindMitra में आपका स्वागत है"
-                : "Welcome to MindMitra";
+            t(
+                "Welcome to MindMitra",
+                "MindMitra में आपका स्वागत है"
+            );
     }
 
 
@@ -100,21 +95,28 @@ function setLanguage(language) {
     if (welcomeText) {
 
         welcomeText.innerText =
-            hindiMode
-                ? "AI आधारित संज्ञानात्मक सहायता, स्मृति सहायक और दैनिक स्वास्थ्य"
-                : "AI-powered cognitive support, memory assistance & daily wellness";
+            t(
+                "AI-powered cognitive support, memory assistance & daily wellness",
+                "AI आधारित संज्ञानात्मक सहायता, स्मृति सहायक और दैनिक स्वास्थ्य"
+            );
     }
 
 
-    const homeGreeting =
+    updateAIStatus();
+
+
+    /* Home */
+
+    const greeting =
         document.getElementById("homeGreeting");
 
-    if (homeGreeting) {
+    if (greeting) {
 
-        homeGreeting.innerText =
-            hindiMode
-                ? "सुप्रभात 👋"
-                : "Good Morning 👋";
+        greeting.innerText =
+            t(
+                "Good Morning 👋",
+                "सुप्रभात 👋"
+            );
     }
 
 
@@ -124,14 +126,43 @@ function setLanguage(language) {
     if (homeDescription) {
 
         homeDescription.innerText =
-            hindiMode
-                ? "आज अपने मन और शरीर को सक्रिय रखें।"
-                : "Let's keep your mind and body active today.";
+            t(
+                "Let's keep your mind and body active today.",
+                "आज अपने मन और शरीर को सक्रिय रखें।"
+            );
     }
 
 
-    updateAIStatus();
+    /*
+       Change input placeholder.
+    */
+
+    const input =
+        document.getElementById("aiQuestion");
+
+    if (input) {
+
+        input.placeholder =
+            t(
+                "Ask MindMitra...",
+                "MindMitra से पूछें..."
+            );
+    }
+
+
+    /*
+       Rebuild any currently running game
+       so its text also changes language.
+    */
+
+    updateDifficultyUI();
+
     updateAIRecommendation();
+
+    updateWalkingText();
+
+    updateNearbyText();
+
 }
 
 
@@ -142,7 +173,7 @@ function setLanguage(language) {
 function updateAIStatus() {
 
     const status =
-        document.querySelector(".status-card");
+        document.getElementById("aiStatus");
 
     if (!status) {
         return;
@@ -152,13 +183,42 @@ function updateAIStatus() {
 
         <span class="online-dot"></span>
 
-        ${
-            hindiMode
-                ? "AI सहायक सक्रिय"
-                : "AI Assistant Active"
-        }
+        ${t(
+            "AI Assistant Active",
+            "AI सहायक सक्रिय"
+        )}
 
     `;
+}
+
+
+/* =========================================
+   SECTION NAVIGATION
+========================================= */
+
+function showSection(sectionId) {
+
+    document.querySelectorAll(".section").forEach(section => {
+
+        section.classList.remove("active");
+
+    });
+
+
+    const section =
+        document.getElementById(sectionId);
+
+    if (section) {
+
+        section.classList.add("active");
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 
@@ -172,12 +232,16 @@ function completeReminder(button) {
         return;
     }
 
+
     button.dataset.done = "true";
 
+
     button.innerText =
-        hindiMode
-            ? "पूरा ✓"
-            : "Done ✓";
+        t(
+            "Done ✓",
+            "पूरा ✓"
+        );
+
 
     completedReminders++;
 
@@ -186,8 +250,10 @@ function completeReminder(button) {
         document.getElementById("reminderDone");
 
     if (reminderDone) {
+
         reminderDone.innerText =
             completedReminders;
+
     }
 
 
@@ -195,8 +261,10 @@ function completeReminder(button) {
         document.getElementById("dashboardReminders");
 
     if (dashboardReminders) {
+
         dashboardReminders.innerText =
             completedReminders + "/5";
+
     }
 }
 
@@ -208,9 +276,10 @@ function completeReminder(button) {
 function emergencyHelp() {
 
     alert(
-        hindiMode
-            ? "🆘 आपातकालीन सहायता सक्रिय की गई है। यह अभी एक demo feature है।"
-            : "🆘 Emergency assistance activated. This is currently a demo feature."
+        t(
+            "🆘 Emergency assistance activated. This is currently a demo feature.",
+            "🆘 आपातकालीन सहायता सक्रिय की गई है। यह अभी एक डेमो सुविधा है।"
+        )
     );
 }
 
@@ -218,9 +287,10 @@ function emergencyHelp() {
 function contactDoctor() {
 
     alert(
-        hindiMode
-            ? "👨‍⚕️ यह demo है। वास्तविक ऐप में सुरक्षित डॉक्टर कॉल या वीडियो कॉल जोड़ी जा सकती है।"
-            : "👨‍⚕️ This is a demo. A secure doctor call or video call can be integrated in the real application."
+        t(
+            "👨‍⚕️ This is a demo. A secure doctor call or video call can be integrated into the real application.",
+            "👨‍⚕️ यह एक डेमो है। वास्तविक ऐप में सुरक्षित डॉक्टर कॉल या वीडियो कॉल जोड़ी जा सकती है।"
+        )
     );
 }
 
@@ -228,9 +298,10 @@ function contactDoctor() {
 function contactCaregiver() {
 
     alert(
-        hindiMode
-            ? "👨‍👩‍👧 यह demo है। वास्तविक ऐप में caregiver से संपर्क किया जा सकता है।"
-            : "👨‍👩‍👧 This is a demo. A real application can connect the user with a caregiver."
+        t(
+            "👨‍👩‍👧 This is a demo. A real application can connect the user with a caregiver.",
+            "👨‍👩‍👧 यह एक डेमो है। वास्तविक ऐप में उपयोगकर्ता को देखभालकर्ता से जोड़ा जा सकता है।"
+        )
     );
 }
 
@@ -247,65 +318,37 @@ function recordGame(score) {
 
 
     const average =
-        Math.round(totalScore / gamesCompleted);
+        Math.round(
+            totalScore / gamesCompleted
+        );
 
 
-    const dashboardGames =
-        document.getElementById("dashboardGames");
+    /*
+       Difficulty logic.
 
-    if (dashboardGames) {
-        dashboardGames.innerText =
-            gamesCompleted;
-    }
+       Good performance repeatedly increases
+       difficulty.
 
+       Low performance decreases it.
 
-    const dashboardScore =
-        document.getElementById("dashboardScore");
-
-    if (dashboardScore) {
-        dashboardScore.innerText =
-            average + "%";
-    }
-
-
-    const homeScore =
-        document.getElementById("homeScore");
-
-    if (homeScore) {
-        homeScore.innerText =
-            average + "%";
-    }
-
+       Moderate performance keeps it.
+    */
 
     if (score >= 80 && difficulty < 5) {
 
         difficulty++;
 
-    } else if (score < 50 && difficulty > 1) {
+    }
+    else if (score < 50 && difficulty > 1) {
 
         difficulty--;
+
     }
 
 
-    const difficultyLevel =
-        document.getElementById("difficultyLevel");
+    updateDashboard(average);
 
-    if (difficultyLevel) {
-        difficultyLevel.innerText =
-            difficulty;
-    }
-
-
-    const dashboardLevel =
-        document.getElementById("dashboardLevel");
-
-    if (dashboardLevel) {
-
-        dashboardLevel.innerText =
-            hindiMode
-                ? "स्तर " + difficulty
-                : "Level " + difficulty;
-    }
+    updateDifficultyUI();
 
 
     let recommendation;
@@ -315,38 +358,46 @@ function recordGame(score) {
     if (score >= 80) {
 
         recommendation =
-            hindiMode
-                ? "प्रदर्शन अच्छा है — AI ने कठिनाई थोड़ी बढ़ाई।"
-                : "Good performance — AI increased the difficulty slightly.";
+            t(
+                "Excellent work! The AI has increased the challenge for the next activity.",
+                "बहुत अच्छा! AI ने अगले अभ्यास की कठिनाई बढ़ा दी है।"
+            );
 
         memoryStatus =
-            hindiMode
-                ? "अच्छा"
-                : "Good";
+            t(
+                "Strong",
+                "अच्छा"
+            );
 
-    } else if (score >= 50) {
+    }
+    else if (score >= 50) {
 
         recommendation =
-            hindiMode
-                ? "प्रदर्शन सामान्य है — वर्तमान स्तर जारी रखें।"
-                : "Performance is moderate — keep the current level.";
+            t(
+                "Good effort. The current difficulty will continue.",
+                "अच्छा प्रयास। वर्तमान कठिनाई स्तर जारी रहेगा।"
+            );
 
         memoryStatus =
-            hindiMode
-                ? "सामान्य"
-                : "Moderate";
+            t(
+                "Moderate",
+                "सामान्य"
+            );
 
-    } else {
+    }
+    else {
 
         recommendation =
-            hindiMode
-                ? "AI ने अभ्यास को आसान किया।"
-                : "AI reduced the difficulty for easier practice.";
+            t(
+                "The AI has reduced the challenge to provide gentler practice.",
+                "AI ने अभ्यास को थोड़ा आसान कर दिया है।"
+            );
 
         memoryStatus =
-            hindiMode
-                ? "अभ्यास आवश्यक"
-                : "Needs Practice";
+            t(
+                "Needs Practice",
+                "अधिक अभ्यास आवश्यक"
+            );
     }
 
 
@@ -354,17 +405,23 @@ function recordGame(score) {
         document.getElementById("memoryStatus");
 
     if (memoryElement) {
+
         memoryElement.innerText =
             memoryStatus;
+
     }
 
 
     const recommendationElement =
-        document.getElementById("dashboardRecommendation");
+        document.getElementById(
+            "dashboardRecommendation"
+        );
 
     if (recommendationElement) {
+
         recommendationElement.innerText =
             recommendation;
+
     }
 
 
@@ -372,26 +429,152 @@ function recordGame(score) {
         document.getElementById("aiHomeMessage");
 
     if (aiMessage) {
+
         aiMessage.innerText =
             recommendation;
+
+    }
+
+
+    updateDifficultyUI();
+}
+
+
+function updateDashboard(average) {
+
+    const games =
+        document.getElementById("dashboardGames");
+
+    if (games) {
+        games.innerText = gamesCompleted;
+    }
+
+
+    const score =
+        document.getElementById("dashboardScore");
+
+    if (score) {
+        score.innerText = average + "%";
+    }
+
+
+    const homeScore =
+        document.getElementById("homeScore");
+
+    if (homeScore) {
+        homeScore.innerText = average + "%";
     }
 }
 
 
-function updateAIRecommendation() {
+/* =========================================
+   DIFFICULTY UI
+========================================= */
 
-    if (gamesCompleted === 0) {
+function updateDifficultyUI() {
 
-        const message =
-            document.getElementById("aiHomeMessage");
+    const level =
+        document.getElementById("difficultyLevel");
 
-        if (message) {
+    if (level) {
+        level.innerText = difficulty;
+    }
 
-            message.innerText =
-                hindiMode
-                    ? "व्यक्तिगत सुझाव प्राप्त करने के लिए कोई cognitive game खेलें।"
-                    : "Complete a cognitive game to receive a personalized recommendation.";
-        }
+
+    const dashboardLevel =
+        document.getElementById("dashboardLevel");
+
+    if (dashboardLevel) {
+
+        dashboardLevel.innerText =
+            t(
+                "Level " + difficulty,
+                "स्तर " + difficulty
+            );
+    }
+
+
+    const title =
+        document.getElementById("difficultyTitle");
+
+    const description =
+        document.getElementById(
+            "difficultyDescription"
+        );
+
+
+    const descriptions = {
+
+        1: [
+            "Current Level",
+            "Starting with gentle cognitive exercises.",
+            "वर्तमान स्तर",
+            "हल्के संज्ञानात्मक अभ्यास से शुरुआत।"
+        ],
+
+        2: [
+            "Easy Level",
+            "The exercises now require a little more attention.",
+            "आसान स्तर",
+            "अब अभ्यास में थोड़ा अधिक ध्यान देना होगा।"
+        ],
+
+        3: [
+            "Moderate Level",
+            "The AI is giving you more challenging memory tasks.",
+            "मध्यम स्तर",
+            "AI अब थोड़े कठिन स्मृति अभ्यास दे रहा है।"
+        ],
+
+        4: [
+            "Challenging Level",
+            "Sequences are longer and require stronger attention.",
+            "चुनौतीपूर्ण स्तर",
+            "क्रम लंबे हैं और अधिक ध्यान की आवश्यकता है।"
+        ],
+
+        5: [
+            "Advanced Level",
+            "The activities require sustained attention and memory.",
+            "उन्नत स्तर",
+            "इन अभ्यासों में लगातार ध्यान और स्मृति की आवश्यकता है।"
+        ]
+
+    };
+
+
+    const data =
+        descriptions[difficulty];
+
+
+    if (title) {
+
+        title.innerText =
+            hindiMode
+                ? data[2]
+                : data[0];
+
+    }
+
+
+    if (description) {
+
+        description.innerText =
+            hindiMode
+                ? data[3]
+                : data[1];
+
+    }
+
+
+    const progress =
+        document.getElementById("levelProgress");
+
+    if (progress) {
+
+        progress.style.width =
+            (difficulty * 20) + "%";
+
     }
 }
 
@@ -402,102 +585,150 @@ function updateAIRecommendation() {
 
 function memoryGame() {
 
-    const levelItems =
-        difficulty >= 4
-            ? "🍎 🏠 🐘 🌳 🚲 ⭐"
-            : difficulty >= 2
-                ? "🍎 🏠 🐘 🌳 ⭐"
-                : "🍎 🏠 🐘 🌳";
+    let items;
+
+
+    if (difficulty === 1) {
+
+        items =
+            ["🍎", "🏠", "🐘"];
+
+    }
+    else if (difficulty === 2) {
+
+        items =
+            ["🍎", "🏠", "🐘", "🚲"];
+
+    }
+    else if (difficulty === 3) {
+
+        items =
+            ["🍎", "🏠", "🐘", "🚲", "⭐"];
+
+    }
+    else if (difficulty === 4) {
+
+        items =
+            ["🍎", "🏠", "🐘", "🚲", "⭐", "🌳"];
+
+    }
+    else {
+
+        items =
+            ["🍎", "🏠", "🐘", "🚲", "⭐", "🌳", "🎁"];
+
+    }
+
+
+    const target =
+        items[
+            Math.floor(
+                Math.random() * items.length
+            )
+        ];
 
 
     document.getElementById("gameArea").innerHTML = `
 
         <h2>
-            🃏
-            ${hindiMode ? "स्मृति कार्ड" : "Memory Cards"}
+            🃏 ${t(
+                "Memory Cards",
+                "स्मृति कार्ड"
+            )}
         </h2>
 
         <p>
-            ${
-                hindiMode
-                    ? "इन वस्तुओं को ध्यान से याद करें:"
-                    : "Remember these objects:"
-            }
+            ${t(
+                "Remember these objects carefully:",
+                "इन वस्तुओं को ध्यान से याद करें:"
+            )}
         </p>
 
         <div class="sequence-box">
-            ${levelItems}
+            ${items.join(" ")}
         </div>
 
         <p>
-            ${
-                hindiMode
-                    ? "ध्यान से देखें और फिर आगे बढ़ें।"
-                    : "Look carefully and continue."
-            }
+            ${t(
+                "Try to remember all the objects.",
+                "सभी वस्तुओं को याद करने की कोशिश करें।"
+            )}
         </p>
 
-        <button onclick="memoryQuestion()">
-            ${
-                hindiMode
-                    ? "छिपाएं और जारी रखें"
-                    : "Hide & Continue"
-            }
+        <button onclick='memoryQuestion("${target}")'>
+            ${t(
+                "Hide & Continue",
+                "छिपाएँ और जारी रखें"
+            )}
         </button>
     `;
 }
 
 
-function memoryQuestion() {
+function memoryQuestion(target) {
+
+    let options =
+        ["🍎", "🚗", "⚽", "📱", "🌸", "🐶", "🎁"];
+
+
+    options =
+        options
+            .sort(() => Math.random() - .5)
+            .slice(
+                0,
+                Math.min(
+                    difficulty + 2,
+                    5
+                )
+            );
+
+
+    if (!options.includes(target)) {
+
+        options[0] = target;
+
+    }
+
 
     document.getElementById("gameArea").innerHTML = `
 
         <h2>
-            ${
-                hindiMode
-                    ? "आपने कौन सी वस्तु देखी?"
-                    : "Which object did you see?"
-            }
+            ${t(
+                "Which object did you remember?",
+                "आपको कौन सी वस्तु याद है?"
+            )}
         </h2>
 
         <div class="game-options">
 
-            <button onclick="memoryAnswer(true)">
-                🍎 ${hindiMode ? "सेब" : "Apple"}
-            </button>
-
-            <button onclick="memoryAnswer(false)">
-                🚗 ${hindiMode ? "कार" : "Car"}
-            </button>
-
-            <button onclick="memoryAnswer(false)">
-                ⚽ ${hindiMode ? "गेंद" : "Ball"}
-            </button>
-
-            <button onclick="memoryAnswer(false)">
-                📱 ${hindiMode ? "फोन" : "Phone"}
-            </button>
+            ${options.map(
+                item => `
+                    <button onclick='memoryAnswer("${item}","${target}")'>
+                        ${item}
+                    </button>
+                `
+            ).join("")}
 
         </div>
     `;
 }
 
 
-function memoryAnswer(correct) {
+function memoryAnswer(answer, target) {
 
-    const score =
-        correct ? 100 : 25;
+    const correct =
+        answer === target;
 
-    showGameResult(score);
+
+    showGameResult(
+        correct ? 100 : 25
+    );
 }
 
 
 /* =========================================
    COLOR MEMORY
 ========================================= */
-
-let colorSequence = [];
-
 
 function colorGame() {
 
@@ -535,58 +766,60 @@ function colorGame() {
 
 
     const length =
-        difficulty >= 4
-            ? 6
-            : difficulty >= 2
-                ? 5
-                : 4;
+        Math.min(
+            3 + difficulty,
+            7
+        );
 
 
     colorSequence = [];
 
 
-    for (let i = 0; i < length; i++) {
+    for (
+        let i = 0;
+        i < length;
+        i++
+    ) {
 
-        const random =
+        colorSequence.push(
             colors[
                 Math.floor(
-                    Math.random() * colors.length
+                    Math.random() *
+                    colors.length
                 )
-            ];
+            ]
+        );
 
-        colorSequence.push(random);
     }
 
 
     document.getElementById("gameArea").innerHTML = `
 
         <h2>
-            🎨
-            ${hindiMode ? "रंग स्मृति" : "Color Memory"}
+            🎨 ${t(
+                "Color Memory",
+                "रंग स्मृति"
+            )}
         </h2>
 
         <p>
-            ${
-                hindiMode
-                    ? "इस रंग क्रम को याद करें:"
-                    : "Remember this color sequence:"
-            }
+            ${t(
+                "Remember this color sequence:",
+                "इस रंग क्रम को याद करें:"
+            )}
         </p>
 
         <div class="sequence-box">
-            ${colorSequence.map(c => c.emoji).join(" ")}
+            ${colorSequence.map(
+                c => c.emoji
+            ).join(" ")}
         </div>
 
-        <p>
-            ${
-                hindiMode
-                    ? "क्रम याद होने के बाद नीचे क्लिक करें।"
-                    : "Remember the sequence and continue."
-            }
-        </p>
-
         <button onclick="colorQuestion()">
-            ${hindiMode ? "जारी रखें" : "Continue"}
+            ${t(
+                "Continue",
+                "जारी रखें"
+            )}
         </button>
     `;
 }
@@ -595,7 +828,9 @@ function colorGame() {
 function colorQuestion() {
 
     const targetIndex =
-        difficulty >= 3 ? 2 : 1;
+        Math.floor(
+            colorSequence.length / 2
+        );
 
 
     const target =
@@ -605,38 +840,39 @@ function colorQuestion() {
     document.getElementById("gameArea").innerHTML = `
 
         <h2>
-            🎨
-            ${
-                hindiMode
-                    ? "रंग स्मृति प्रश्न"
-                    : "Color Memory Question"
-            }
+            🎨 ${t(
+                "Color Memory Question",
+                "रंग स्मृति प्रश्न"
+            )}
         </h2>
 
         <p>
-            ${
-                hindiMode
-                    ? `कौन सा रंग ${targetIndex + 1} नंबर पर था?`
-                    : `Which color was ${targetIndex + 1}${targetIndex === 1 ? "nd" : "rd"}?`
-            }
+            ${t(
+                "Which color was in position " +
+                (targetIndex + 1) +
+                "?",
+                "स्थान " +
+                (targetIndex + 1) +
+                " पर कौन सा रंग था?"
+            )}
         </p>
 
         <div class="game-options">
 
             <button onclick="colorAnswer('red')">
-                🔴 ${hindiMode ? "लाल" : "Red"}
+                🔴 ${t("Red","लाल")}
             </button>
 
             <button onclick="colorAnswer('green')">
-                🟢 ${hindiMode ? "हरा" : "Green"}
+                🟢 ${t("Green","हरा")}
             </button>
 
             <button onclick="colorAnswer('blue')">
-                🔵 ${hindiMode ? "नीला" : "Blue"}
+                🔵 ${t("Blue","नीला")}
             </button>
 
             <button onclick="colorAnswer('yellow')">
-                🟡 ${hindiMode ? "पीला" : "Yellow"}
+                🟡 ${t("Yellow","पीला")}
             </button>
 
         </div>
@@ -647,136 +883,232 @@ function colorQuestion() {
 function colorAnswer(answer) {
 
     const targetIndex =
-        difficulty >= 3 ? 2 : 1;
+        Math.floor(
+            colorSequence.length / 2
+        );
 
 
     const correct =
         colorSequence[targetIndex].name === answer;
 
 
-    const score =
-        correct ? 100 : 25;
-
-
-    showGameResult(score);
+    showGameResult(
+        correct ? 100 : 25
+    );
 }
 
 
 /* =========================================
-   NUMBER GAME
+   NUMBER SEQUENCE
 ========================================= */
 
 function numberGame() {
 
-    let sequence;
+    let start =
+        difficulty >= 4
+            ? 3
+            : 2;
 
-    if (difficulty >= 4) {
 
-        sequence =
-            "2 → 4 → 6 → 8 → ?";
+    let step =
+        difficulty >= 5
+            ? 4
+            : difficulty >= 3
+                ? 3
+                : 2;
 
-    } else {
 
-        sequence =
-            "2 → 4 → 6 → ?";
+    let length =
+        difficulty >= 4
+            ? 5
+            : 4;
+
+
+    let numbers = [];
+
+
+    for (
+        let i = 0;
+        i < length;
+        i++
+    ) {
+
+        numbers.push(
+            start + i * step
+        );
+
     }
+
+
+    const missing =
+        numbers[
+            Math.floor(
+                numbers.length / 2
+            )
+        ];
+
+
+    const shown =
+        numbers.map(
+            n => n === missing ? "?" : n
+        );
 
 
     document.getElementById("gameArea").innerHTML = `
 
         <h2>
-            🔢
-            ${hindiMode ? "संख्या क्रम" : "Number Sequence"}
+            🔢 ${t(
+                "Number Sequence",
+                "संख्या क्रम"
+            )}
         </h2>
 
         <p>
-            ${
-                hindiMode
-                    ? "लुप्त संख्या खोजें:"
-                    : "Find the missing number:"
-            }
+            ${t(
+                "Find the missing number:",
+                "लुप्त संख्या खोजें:"
+            )}
         </p>
 
         <h1>
-            ${sequence}
+            ${shown.join(" → ")}
         </h1>
 
-        <button onclick="numberAnswer(8)">
-            8
-        </button>
+        <div class="game-options">
 
-        <button onclick="numberAnswer(7)">
-            7
-        </button>
+            ${[
+                missing,
+                missing + step,
+                missing - 1,
+                missing + 1
+            ]
+            .sort(() => Math.random() - .5)
+            .map(
+                n => `
+                    <button onclick="numberAnswer(${n},${missing})">
+                        ${n}
+                    </button>
+                `
+            ).join("")}
 
-        <button onclick="numberAnswer(10)">
-            10
-        </button>
-
+        </div>
     `;
 }
 
 
-function numberAnswer(answer) {
+function numberAnswer(answer, correctAnswer) {
 
-    const score =
-        answer === 8 ? 100 : 25;
-
-    showGameResult(score);
+    showGameResult(
+        answer === correctAnswer
+            ? 100
+            : 25
+    );
 }
 
 
 /* =========================================
-   PICTURE GAME
+   PICTURE RECOGNITION
 ========================================= */
 
 function pictureGame() {
 
+    const pictures = [
+
+        {
+            emoji: "🏔️",
+            en: "Mountain",
+            hi: "पहाड़"
+        },
+
+        {
+            emoji: "🍎",
+            en: "Apple",
+            hi: "सेब"
+        },
+
+        {
+            emoji: "🚲",
+            en: "Bicycle",
+            hi: "साइकिल"
+        },
+
+        {
+            emoji: "🏠",
+            en: "House",
+            hi: "घर"
+        },
+
+        {
+            emoji: "🌳",
+            en: "Tree",
+            hi: "पेड़"
+        }
+
+    ];
+
+
+    const item =
+        pictures[
+            Math.min(
+                difficulty - 1,
+                pictures.length - 1
+            )
+        ];
+
+
+    const wrong =
+        pictures.filter(
+            p => p.en !== item.en
+        );
+
+
     document.getElementById("gameArea").innerHTML = `
 
         <h2>
-            🖼️
-            ${
-                hindiMode
-                    ? "चित्र पहचान"
-                    : "Picture Recognition"
-            }
+            🖼️ ${t(
+                "Picture Recognition",
+                "चित्र पहचान"
+            )}
         </h2>
 
-        <div style="font-size:70px;">
-            🏔️
+        <div style="font-size:80px;">
+            ${item.emoji}
         </div>
 
         <p>
-            ${
-                hindiMode
-                    ? "यह क्या है?"
-                    : "What is this?"
-            }
+            ${t(
+                "What is this?",
+                "यह क्या है?"
+            )}
         </p>
 
-        <button onclick="pictureAnswer(true)">
-            🏔️ ${hindiMode ? "पहाड़" : "Mountain"}
-        </button>
+        <div class="game-options">
 
-        <button onclick="pictureAnswer(false)">
-            🚗 ${hindiMode ? "कार" : "Car"}
-        </button>
+            <button onclick='pictureAnswer(true)'>
+                ${item.emoji}
+                ${hindiMode ? item.hi : item.en}
+            </button>
 
-        <button onclick="pictureAnswer(false)">
-            📱 ${hindiMode ? "फोन" : "Phone"}
-        </button>
+            <button onclick="pictureAnswer(false)">
+                ${wrong[0].emoji}
+                ${hindiMode ? wrong[0].hi : wrong[0].en}
+            </button>
 
+            <button onclick="pictureAnswer(false)">
+                ${wrong[1].emoji}
+                ${hindiMode ? wrong[1].hi : wrong[1].en}
+            </button>
+
+        </div>
     `;
 }
 
 
 function pictureAnswer(correct) {
 
-    const score =
-        correct ? 100 : 25;
-
-    showGameResult(score);
+    showGameResult(
+        correct ? 100 : 25
+    );
 }
 
 
@@ -786,55 +1118,191 @@ function pictureAnswer(correct) {
 
 function attentionGame() {
 
+    const normal = "🍎";
+
     const different =
-        difficulty >= 3
-            ? "🍎 🍎 🍊 🍎 🍎 🍎"
-            : "🍎 🍎 🍎 🍊 🍎";
+        difficulty >= 4
+            ? "🍊"
+            : "🍎";
+
+
+    const length =
+        difficulty + 4;
+
+
+    let objects =
+        Array(length).fill(normal);
+
+
+    const position =
+        Math.floor(
+            Math.random() * length
+        );
+
+
+    objects[position] =
+        different;
 
 
     document.getElementById("gameArea").innerHTML = `
 
         <h2>
-            👀
-            ${
-                hindiMode
-                    ? "ध्यान परीक्षण"
-                    : "Attention Test"
-            }
+            👀 ${t(
+                "Attention Test",
+                "ध्यान परीक्षण"
+            )}
         </h2>
 
         <p>
-            ${
-                hindiMode
-                    ? "अलग वस्तु खोजें:"
-                    : "Find the different object:"
-            }
+            ${t(
+                "Find the different object.",
+                "अलग वस्तु खोजें।"
+            )}
         </p>
 
         <div class="sequence-box">
-            ${different}
+            ${objects.join(" ")}
         </div>
 
-        <button onclick="attentionAnswer(true)">
-            🍊
-            ${hindiMode ? "संतरा" : "Orange"}
-        </button>
+        <div class="game-options">
 
-        <button onclick="attentionAnswer(false)">
-            🍎
-            ${hindiMode ? "सेब" : "Apple"}
-        </button>
+            <button onclick="attentionAnswer(${different === "🍊"})">
+                🍊 ${t("Orange","संतरा")}
+            </button>
 
+            <button onclick="attentionAnswer(false)">
+                🍎 ${t("Apple","सेब")}
+            </button>
+
+        </div>
     `;
 }
 
 
 function attentionAnswer(correct) {
 
-    const score =
-        correct ? 100 : 25;
+    showGameResult(
+        correct ? 100 : 25
+    );
+}
 
-    showGameResult(score);
+
+/* =========================================
+   COMPLETE THE PATTERN
+========================================= */
+
+function patternGame() {
+
+    let pattern;
+    let answer;
+    let choices;
+
+
+    if (difficulty === 1) {
+
+        pattern = ["🔴", "🔵", "🔴", "?"];
+        answer = "🔵";
+
+        choices =
+            ["🔵", "🟢", "🟡"];
+
+    }
+
+    else if (difficulty === 2) {
+
+        pattern = ["🍎", "🍌", "🍎", "🍌", "?"];
+        answer = "🍎";
+
+        choices =
+            ["🍎", "🍊", "🍇"];
+
+    }
+
+    else if (difficulty === 3) {
+
+        pattern =
+            ["🔺", "🔵", "🟩", "🔺", "🔵", "?"];
+
+        answer = "🟩";
+
+        choices =
+            ["🟩", "🔺", "⭐"];
+
+    }
+
+    else if (difficulty === 4) {
+
+        pattern =
+            ["1", "2", "4", "1", "2", "?"];
+
+        answer = "4";
+
+        choices =
+            ["3", "4", "5"];
+
+    }
+
+    else {
+
+        pattern =
+            ["🔴", "🔵", "🟢", "🔴", "🔵", "🟢", "?"];
+
+        answer = "🔴";
+
+        choices =
+            ["🔴", "🟡", "🟣"];
+
+    }
+
+
+    patternAnswerValue =
+        answer;
+
+
+    document.getElementById("gameArea").innerHTML = `
+
+        <h2>
+            🧩 ${t(
+                "Complete the Pattern",
+                "पैटर्न पूरा करें"
+            )}
+        </h2>
+
+        <p>
+            ${t(
+                "Look carefully and choose what comes next:",
+                "ध्यान से देखें और चुनें कि अगला क्या आएगा:"
+            )}
+        </p>
+
+        <div class="sequence-box">
+            ${pattern.join(" → ")}
+        </div>
+
+        <div class="game-options">
+
+            ${choices.map(
+                choice => `
+                    <button
+                        class="pattern-choice"
+                        onclick='patternAnswer("${choice}")'>
+                        ${choice}
+                    </button>
+                `
+            ).join("")}
+
+        </div>
+    `;
+}
+
+
+function patternAnswer(answer) {
+
+    showGameResult(
+        answer === patternAnswerValue
+            ? 100
+            : 25
+    );
 }
 
 
@@ -853,64 +1321,71 @@ function showGameResult(score) {
     if (score >= 80) {
 
         message =
-            hindiMode
-                ? "🎉 बहुत अच्छा प्रदर्शन!"
-                : "🎉 Excellent performance!";
+            t(
+                "🎉 Excellent performance!",
+                "🎉 बहुत अच्छा प्रदर्शन!"
+            );
 
-    } else if (score >= 50) {
-
-        message =
-            hindiMode
-                ? "👍 अच्छा प्रयास!"
-                : "👍 Good try!";
-
-    } else {
+    }
+    else {
 
         message =
-            hindiMode
-                ? "💪 अभ्यास करते रहें!"
-                : "💪 Keep practicing!";
+            t(
+                "💪 Good effort! Keep practicing.",
+                "💪 अच्छा प्रयास! अभ्यास करते रहें।"
+            );
     }
 
 
     document.getElementById("gameArea").innerHTML = `
 
-        <h2>
-            ${message}
-        </h2>
+        <h2>${message}</h2>
 
         <div style="font-size:45px;">
             ${score >= 80 ? "🏆" : "🧠"}
         </div>
 
         <h3>
-            ${hindiMode ? "स्कोर" : "Score"}:
-            ${score}%
+            ${t("Score","स्कोर")}: ${score}%
         </h3>
 
         <p>
-            ${
-                hindiMode
-                    ? "AI कठिनाई स्तर"
-                    : "AI Difficulty Level"
-            }:
-            ${difficulty}
+            ${t(
+                "AI Difficulty Level",
+                "AI कठिनाई स्तर"
+            )}: ${difficulty}
         </p>
 
-        <button onclick="memoryGame()">
-            ${
-                hindiMode
-                    ? "दूसरा खेल खेलें"
-                    : "Play Another Game"
-            }
-        </button>
+        <div class="game-options">
 
+            <button onclick="memoryGame()">
+                🃏 ${t(
+                    "Memory",
+                    "स्मृति"
+                )}
+            </button>
+
+            <button onclick="patternGame()">
+                🧩 ${t(
+                    "Pattern",
+                    "पैटर्न"
+                )}
+            </button>
+
+            <button onclick="showSection('games')">
+                🎮 ${t(
+                    "All Games",
+                    "सभी खेल"
+                )}
+            </button>
+
+        </div>
     `;
 }
 
 
 /* =========================================
-   WALKING TRACKER
+   WALKING
 ========================================= */
 
 function calculateDistance(
@@ -922,25 +1397,25 @@ function calculateDistance(
 
     const R = 6371;
 
-
     const dLat =
         (lat2 - lat1) *
         Math.PI / 180;
-
 
     const dLon =
         (lon2 - lon1) *
         Math.PI / 180;
 
-
     const a =
         Math.sin(dLat / 2) ** 2 +
 
-        Math.cos(lat1 * Math.PI / 180) *
-        Math.cos(lat2 * Math.PI / 180) *
+        Math.cos(
+            lat1 * Math.PI / 180
+        ) *
+        Math.cos(
+            lat2 * Math.PI / 180
+        ) *
 
         Math.sin(dLon / 2) ** 2;
-
 
     return R *
         2 *
@@ -956,9 +1431,10 @@ function startWalking() {
     if (!navigator.geolocation) {
 
         alert(
-            hindiMode
-                ? "इस ब्राउज़र में GPS उपलब्ध नहीं है।"
-                : "Location is not supported by this browser."
+            t(
+                "Location is not supported by this browser.",
+                "इस ब्राउज़र में लोकेशन उपलब्ध नहीं है।"
+            )
         );
 
         return;
@@ -966,14 +1442,19 @@ function startWalking() {
 
 
     const status =
-        document.getElementById("locationStatus");
+        document.getElementById(
+            "locationStatus"
+        );
+
 
     if (status) {
 
         status.innerText =
-            hindiMode
-                ? "📍 चलने की दूरी ट्रैक की जा रही है..."
-                : "📍 Tracking your walking distance...";
+            t(
+                "📍 Tracking your walking distance...",
+                "📍 आपके चलने की दूरी ट्रैक की जा रही है..."
+            );
+
     }
 
 
@@ -999,41 +1480,45 @@ function startWalking() {
 
                     if (
                         distance > 0 &&
-                        distance < 0.05
+                        distance < .05
                     ) {
 
-                        totalDistance += distance;
+                        totalDistance +=
+                            distance;
 
                         updateWalkingData();
+
                     }
+
                 }
 
 
                 lastPosition =
                     current;
+
             },
 
 
             () => {
 
-                const status =
-                    document.getElementById("locationStatus");
-
                 if (status) {
 
                     status.innerText =
-                        hindiMode
-                            ? "⚠️ GPS अनुमति दें।"
-                            : "⚠️ Please allow location permission.";
-                }
-            },
+                        t(
+                            "⚠️ Please allow location permission.",
+                            "⚠️ कृपया लोकेशन की अनुमति दें।"
+                        );
 
+                }
+
+            },
 
             {
                 enableHighAccuracy: true,
                 maximumAge: 1000,
                 timeout: 5000
             }
+
         );
 }
 
@@ -1050,14 +1535,19 @@ function stopWalking() {
 
 
         const status =
-            document.getElementById("locationStatus");
+            document.getElementById(
+                "locationStatus"
+            );
+
 
         if (status) {
 
             status.innerText =
-                hindiMode
-                    ? "⏹️ चलने की ट्रैकिंग रोक दी गई।"
-                    : "⏹️ Walking tracking stopped.";
+                t(
+                    "⏹️ Walking tracking stopped.",
+                    "⏹️ चलने की ट्रैकिंग रोक दी गई।"
+                );
+
         }
     }
 }
@@ -1066,46 +1556,65 @@ function stopWalking() {
 function updateWalkingData() {
 
     const distance =
-        document.getElementById("distance");
+        document.getElementById(
+            "distance"
+        );
+
 
     if (distance) {
 
         distance.innerText =
             totalDistance.toFixed(2);
+
     }
 
 
     const homeDistance =
-        document.getElementById("homeDistance");
+        document.getElementById(
+            "homeDistance"
+        );
+
 
     if (homeDistance) {
 
         homeDistance.innerText =
             totalDistance.toFixed(2);
+
     }
 
 
     const dashboardWalk =
-        document.getElementById("dashboardWalk");
+        document.getElementById(
+            "dashboardWalk"
+        );
+
 
     if (dashboardWalk) {
 
         dashboardWalk.innerText =
-            totalDistance.toFixed(2) + " km";
+            totalDistance.toFixed(2) +
+            " km";
+
     }
 
 
     const steps =
-        Math.round(totalDistance * 1300);
+        Math.round(
+            totalDistance * 1300
+        );
 
 
     const stepsElement =
-        document.getElementById("steps");
+        document.getElementById(
+            "steps"
+        );
+
 
     if (stepsElement) {
 
         stepsElement.innerText =
             steps;
+
     }
 
 
@@ -1117,12 +1626,37 @@ function updateWalkingData() {
 
 
     const progressElement =
-        document.getElementById("walkingProgress");
+        document.getElementById(
+            "walkingProgress"
+        );
+
 
     if (progressElement) {
 
         progressElement.style.width =
             progress + "%";
+
+    }
+}
+
+
+function updateWalkingText() {
+
+    const status =
+        document.getElementById(
+            "locationStatus"
+        );
+
+    if (
+        status &&
+        !watchID
+    ) {
+
+        status.innerText =
+            t(
+                "📍 Walking tracker is ready.",
+                "📍 चलने की ट्रैकिंग तैयार है।"
+            );
     }
 }
 
@@ -1138,18 +1672,48 @@ function findNearby(place) {
 
 
     const mapResult =
-        document.getElementById("mapResult");
+        document.getElementById(
+            "mapResult"
+        );
+
 
     if (mapResult) {
 
         mapResult.innerHTML =
-            hindiMode
-                ? `🔎 नज़दीकी <strong>${place}</strong> खोजी जा रही है...`
-                : `🔎 Searching for nearby <strong>${place}</strong>...`;
+            t(
+                `🔎 Searching for nearby <strong>${place}</strong>...`,
+                `🔎 नज़दीकी <strong>${translatePlace(place)}</strong> खोजी जा रही है...`
+            );
+
     }
 
 
     getLocation();
+}
+
+
+function translatePlace(place) {
+
+    const translations = {
+
+        "ATM": "ATM",
+
+        "Petrol Pump": "पेट्रोल पंप",
+
+        "Hospital": "अस्पताल",
+
+        "Pharmacy": "फार्मेसी",
+
+        "Police Station": "पुलिस स्टेशन",
+
+        "Restaurant": "रेस्तरां"
+
+    };
+
+
+    return hindiMode
+        ? translations[place] || place
+        : place;
 }
 
 
@@ -1158,14 +1722,19 @@ function getLocation() {
     if (!navigator.geolocation) {
 
         const mapResult =
-            document.getElementById("mapResult");
+            document.getElementById(
+                "mapResult"
+            );
+
 
         if (mapResult) {
 
             mapResult.innerText =
-                hindiMode
-                    ? "आपके ब्राउज़र में GPS उपलब्ध नहीं है।"
-                    : "Your browser does not support GPS.";
+                t(
+                    "Your browser does not support GPS.",
+                    "आपके ब्राउज़र में GPS उपलब्ध नहीं है।"
+                );
+
         }
 
         return;
@@ -1173,14 +1742,19 @@ function getLocation() {
 
 
     const mapResult =
-        document.getElementById("mapResult");
+        document.getElementById(
+            "mapResult"
+        );
+
 
     if (mapResult) {
 
         mapResult.innerText =
-            hindiMode
-                ? "📍 आपकी लोकेशन प्राप्त की जा रही है..."
-                : "📍 Getting your location...";
+            t(
+                "📍 Getting your location...",
+                "📍 आपकी लोकेशन प्राप्त की जा रही है..."
+            );
+
     }
 
 
@@ -1197,11 +1771,7 @@ function getLocation() {
 
             const place =
                 selectedPlace ||
-                (
-                    hindiMode
-                        ? "सहायता सेवाएं"
-                        : "help services"
-                );
+                "help services";
 
 
             if (mapResult) {
@@ -1209,46 +1779,54 @@ function getLocation() {
                 mapResult.innerHTML = `
 
                     📍
-                    ${
-                        hindiMode
-                            ? "लोकेशन मिल गई।"
-                            : "Your location detected."
-                    }
+
+                    ${t(
+                        "Your location detected.",
+                        "आपकी लोकेशन मिल गई।"
+                    )}
 
                     <br><br>
 
-                    ${
-                        hindiMode
-                            ? "नज़दीकी खोज:"
-                            : "Searching nearby:"
-                    }
+                    ${t(
+                        "Searching nearby:",
+                        "नज़दीकी खोज:"
+                    )}
 
                     <strong>
-                        ${place}
+                        ${translatePlace(place)}
                     </strong>
 
                     <br><br>
 
-                    Latitude:
+                    ${t(
+                        "Latitude:",
+                        "अक्षांश:"
+                    )}
+
                     ${lat.toFixed(4)}
 
                     <br>
 
-                    Longitude:
+                    ${t(
+                        "Longitude:",
+                        "देशांतर:"
+                    )}
+
                     ${lon.toFixed(4)}
 
                     <br><br>
 
                     <small>
-                        ${
-                            hindiMode
-                                ? "वास्तविक ऐप में इन coordinates को map/place-search service से जोड़ा जा सकता है।"
-                                : "A complete application can connect these coordinates to a real map/place-search service."
-                        }
+                        ${t(
+                            "These coordinates can be connected to a real map and place-search service.",
+                            "इन coordinates को वास्तविक मानचित्र और स्थान खोज सेवा से जोड़ा जा सकता है।"
+                        )}
                     </small>
 
                 `;
+
             }
+
         },
 
 
@@ -1257,23 +1835,40 @@ function getLocation() {
             if (mapResult) {
 
                 mapResult.innerText =
-                    hindiMode
-                        ? "⚠️ Nearby Help इस्तेमाल करने के लिए GPS अनुमति दें।"
-                        : "⚠️ Please allow location permission to use Nearby Help.";
+                    t(
+                        "⚠️ Please allow location permission to use Nearby Help.",
+                        "⚠️ Nearby Help इस्तेमाल करने के लिए लोकेशन की अनुमति दें।"
+                    );
+
             }
+
         }
+
     );
 }
 
 
+function updateNearbyText() {
+
+    /*
+       Nearby results are regenerated when the user
+       selects a nearby category, so no stale
+       English navigation text remains.
+    */
+
+}
+
+
 /* =========================================
-   MINDMITRA AI DEMO
+   DEMO AI ASSISTANT
 ========================================= */
 
 function askMindMitra() {
 
     const input =
-        document.getElementById("aiQuestion");
+        document.getElementById(
+            "aiQuestion"
+        );
 
 
     if (!input) {
@@ -1286,7 +1881,9 @@ function askMindMitra() {
 
 
     const replyElement =
-        document.getElementById("aiReply");
+        document.getElementById(
+            "aiReply"
+        );
 
 
     if (!question) {
@@ -1294,34 +1891,29 @@ function askMindMitra() {
         if (replyElement) {
 
             replyElement.innerText =
-                hindiMode
-                    ? "कृपया अपना प्रश्न लिखें।"
-                    : "Please type your question.";
+                t(
+                    "Please type your question.",
+                    "कृपया अपना प्रश्न लिखें।"
+                );
+
         }
 
         return;
     }
 
 
-    let reply;
-
-
-    if (hindiMode) {
-
-        reply =
-            "मैं MindMitra का demo AI सहायक हूं। वास्तविक AI backend जोड़कर मैं सामान्य प्रश्नों को समझकर उत्तर दे सकता हूं।";
-
-    } else {
-
-        reply =
-            "I am the MindMitra demo AI assistant. A real AI backend can be connected to understand and answer general questions.";
-    }
+    const reply =
+        t(
+            "I am the MindMitra demo AI assistant. A real AI backend can be connected to understand and answer general questions.",
+            "मैं MindMitra का डेमो AI सहायक हूँ। सामान्य प्रश्नों को समझने और उत्तर देने के लिए वास्तविक AI backend जोड़ा जा सकता है।"
+        );
 
 
     if (replyElement) {
 
         replyElement.innerText =
             "🤖 " + reply;
+
     }
 
 
@@ -1330,7 +1922,7 @@ function askMindMitra() {
 
 
 /* =========================================
-   PAGE START
+   INITIAL PAGE LOAD
 ========================================= */
 
 document.addEventListener(
@@ -1341,5 +1933,38 @@ document.addEventListener(
 
         updateAIRecommendation();
 
+        updateDifficultyUI();
+
+        updateWalkingText();
+
     }
 );
+
+
+/* =========================================
+   INITIAL AI MESSAGE
+========================================= */
+
+function updateAIRecommendation() {
+
+    const message =
+        document.getElementById(
+            "aiHomeMessage"
+        );
+
+
+    if (!message) {
+        return;
+    }
+
+
+    if (gamesCompleted === 0) {
+
+        message.innerText =
+            t(
+                "Complete a cognitive game to receive a personalized recommendation.",
+                "व्यक्तिगत सुझाव प्राप्त करने के लिए कोई संज्ञानात्मक खेल खेलें।"
+            );
+
+    }
+}

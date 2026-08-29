@@ -33,9 +33,6 @@ body {
     gap: 20px;
 }
 
-
-/* LARGE PROJECT NAME */
-
 .brand-main {
     font-size: 30px;
     font-weight: 800;
@@ -44,10 +41,9 @@ body {
 
 .brand-subtitle {
     font-size: 12px;
-    opacity: 0.8;
+    opacity: .8;
     margin-top: 2px;
 }
-
 
 .top-actions {
     display: flex;
@@ -73,11 +69,11 @@ button {
     background: #2878d0;
     color: white;
     font-size: 14px;
-    transition: 0.2s;
+    transition: .2s;
 }
 
 button:hover {
-    opacity: 0.88;
+    opacity: .88;
     transform: translateY(-1px);
 }
 
@@ -172,19 +168,17 @@ button:hover {
 
 
 /* =====================================
-   HOME PAGE
+   HOME
 ===================================== */
 
 .welcome-small {
     background: white;
     padding: 16px 20px;
     border-radius: 14px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
-
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 15px;
 }
 
@@ -234,10 +228,7 @@ button:hover {
 
 .feature-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
+    grid-template-columns: repeat(4,1fr);
     gap: 12px;
 }
 
@@ -245,17 +236,12 @@ button:hover {
     background: white;
     border-radius: 13px;
     padding: 14px;
-
     display: flex;
     align-items: center;
     gap: 10px;
-
     cursor: pointer;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.07);
-
-    transition: 0.2s;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
+    transition: .2s;
 }
 
 .feature-card:hover {
@@ -265,14 +251,11 @@ button:hover {
 .feature-icon {
     width: 42px;
     height: 42px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #eef4fb;
     border-radius: 10px;
-
     font-size: 22px;
 }
 
@@ -295,23 +278,18 @@ button:hover {
 
 
 /* =====================================
-   SMALL AI INSIGHT
+   AI
 ===================================== */
 
 .ai-insight {
     margin-top: 14px;
-
     background: white;
     border-radius: 13px;
-
     padding: 13px 15px;
-
     display: flex;
     align-items: flex-start;
     gap: 12px;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
 }
 
 .ai-icon {
@@ -335,32 +313,21 @@ button:hover {
     color: #555;
 }
 
-
-/* SMALL CHATGPT-STYLE BOX */
-
 .ai-chat-mini {
     display: flex;
-
     max-width: 500px;
-
     border: 1px solid #d8e0e8;
     border-radius: 20px;
-
     overflow: hidden;
-
     background: #f8fafc;
 }
 
 .ai-chat-mini input {
     flex: 1;
-
     border: none;
     outline: none;
-
     padding: 9px 13px;
-
     background: transparent;
-
     font-size: 13px;
 }
 
@@ -385,13 +352,7 @@ button:hover {
     display: flex;
     justify-content: center;
     gap: 10px;
-
     margin-top: 12px;
-}
-
-.contact-row button {
-    padding: 9px 14px;
-    font-size: 13px;
 }
 
 
@@ -403,7 +364,6 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 12px;
 }
 
@@ -424,32 +384,78 @@ button:hover {
 
 
 /* =====================================
+   DIFFICULTY
+===================================== */
+
+.level-badge {
+    background: #eaf3ff;
+    color: #2878d0;
+    padding: 10px 15px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.level-badge strong {
+    display: block;
+    font-size: 25px;
+    margin-top: 2px;
+}
+
+.difficulty-panel {
+    background: white;
+    padding: 15px 18px;
+    border-radius: 13px;
+    margin: 12px 0;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
+}
+
+.difficulty-panel strong {
+    font-size: 16px;
+}
+
+.difficulty-panel p {
+    margin: 5px 0 12px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.level-progress {
+    width: 100%;
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#levelProgress {
+    height: 100%;
+    width: 20%;
+    background: #2878d0;
+    transition: width .4s;
+}
+
+
+/* =====================================
    GAMES
 ===================================== */
 
 .game-grid {
     display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(170px, 1fr));
+    grid-template-columns: repeat(auto-fit,minmax(170px,1fr));
     gap: 12px;
 }
 
 .game-card {
     background: white;
     color: #222;
-
     border-radius: 13px;
-
     padding: 18px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     gap: 7px;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
 }
 
 .game-card span {
@@ -465,17 +471,46 @@ button:hover {
 }
 
 .game-area {
-    min-height: 180px;
-
+    min-height: 220px;
     margin-top: 15px;
-
     background: white;
-
     padding: 25px;
-
     border-radius: 15px;
-
     text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.sequence-box {
+    font-size: 40px;
+    padding: 20px;
+    margin: 15px auto;
+    background: #f1f5f9;
+    border-radius: 15px;
+    letter-spacing: 8px;
+    max-width: 700px;
+}
+
+.game-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.game-options button {
+    min-width: 110px;
+}
+
+.pattern-choice {
+    font-size: 25px;
+    min-width: 120px;
+}
+
+.game-timer {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px;
 }
 
 
@@ -485,26 +520,18 @@ button:hover {
 
 .reminder-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(230px, 1fr));
-
+    grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
     gap: 13px;
 }
 
 .reminder-card {
     background: white;
-
     padding: 15px;
-
     border-radius: 13px;
-
     display: flex;
     align-items: center;
     gap: 12px;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
 }
 
 .reminder-icon {
@@ -532,10 +559,7 @@ button:hover {
 
 .fitness-grid {
     display: grid;
-
-    grid-template-columns:
-        2fr 1fr;
-
+    grid-template-columns: 2fr 1fr;
     gap: 15px;
 }
 
@@ -544,9 +568,7 @@ button:hover {
     background: white;
     padding: 20px;
     border-radius: 15px;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
 }
 
 .fitness-header {
@@ -586,80 +608,12 @@ button:hover {
 .tip {
     padding: 11px;
     margin: 7px 0;
-
     background: #f4f7fb;
-
     border-radius: 8px;
 }
 
-
-/* =====================================
-   YOGA
-===================================== */
-
-.yoga-layout {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 20px;
-
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 15px;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.07);
-}
-
-.yoga-image-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.yoga-image-box img {
-    width: 100%;
-    max-width: 420px;
-    height: 330px;
-
-    object-fit: contain;
-
-    border-radius: 12px;
-
-    background: #eef2f5;
-}
-
-.yoga-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.yoga-info h1 {
-    margin: 7px 0;
-}
-
-.yoga-info h2 {
-    margin: 0 0 10px;
-}
-
-.yoga-info p {
-    color: #555;
-}
-
-.yoga-timer {
-    margin: 10px 0;
-    font-size: 18px;
-}
-
-.yoga-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+.secondary {
+    background: #64748b;
 }
 
 
@@ -669,12 +623,8 @@ button:hover {
 
 .place-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(6, 1fr);
-
+    grid-template-columns: repeat(6,1fr);
     gap: 10px;
-
     margin-bottom: 15px;
 }
 
@@ -687,13 +637,9 @@ button:hover {
 
 .map-box {
     min-height: 300px;
-
     background: #dce8f3;
-
     border-radius: 15px;
-
     text-align: center;
-
     padding: 60px 20px;
 }
 
@@ -703,11 +649,8 @@ button:hover {
 
 .travel-note {
     margin-top: 12px;
-
     padding: 14px;
-
     background: white;
-
     border-radius: 10px;
 }
 
@@ -718,24 +661,16 @@ button:hover {
 
 .dashboard-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
+    grid-template-columns: repeat(4,1fr);
     gap: 13px;
 }
 
 .dashboard-card {
     background: white;
-
     padding: 17px;
-
     border-radius: 13px;
-
     text-align: center;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
 }
 
 .dashboard-card span {
@@ -756,23 +691,17 @@ button:hover {
 .performance-box,
 .doctor-box {
     background: white;
-
     padding: 18px;
-
     border-radius: 13px;
-
     margin-top: 15px;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
 }
 
 .performance-line {
     display: flex;
     justify-content: space-between;
-
+    gap: 20px;
     padding: 10px 0;
-
     border-bottom: 1px solid #edf0f3;
 }
 
@@ -782,6 +711,12 @@ button:hover {
     align-items: center;
 }
 
+.user-badge {
+    background: #eef4fb;
+    padding: 9px 12px;
+    border-radius: 10px;
+}
+
 
 /* =====================================
    FOOTER
@@ -789,15 +724,10 @@ button:hover {
 
 footer {
     text-align: center;
-
     padding: 15px;
-
     background: #243b53;
-
     color: white;
-
     margin-top: 20px;
-
     font-size: 13px;
 }
 
@@ -806,7 +736,7 @@ footer p {
 }
 
 footer small {
-    opacity: 0.7;
+    opacity: .7;
 }
 
 
@@ -814,31 +744,26 @@ footer small {
    MOBILE
 ===================================== */
 
-@media (max-width: 900px) {
+@media (max-width:900px) {
 
     .feature-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 
     .place-grid {
-        grid-template-columns:
-            repeat(3, 1fr);
+        grid-template-columns: repeat(3,1fr);
     }
 
     .dashboard-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 
-    .fitness-grid,
-    .yoga-layout {
+    .fitness-grid {
         grid-template-columns: 1fr;
     }
 }
 
-
-@media (max-width: 600px) {
+@media (max-width:600px) {
 
     .topbar {
         flex-direction: column;
@@ -865,8 +790,7 @@ footer small {
     }
 
     .place-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 
     .dashboard-grid {
@@ -885,5 +809,10 @@ footer small {
 
     .navigation button {
         flex: 1 1 30%;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+        gap: 10px;
     }
 }
