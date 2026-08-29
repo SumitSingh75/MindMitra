@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MindMitra - Cognitive & Wellness Support</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="topbar">
+
+        <div>
+            <div class="brand-main">MindMitra</div>
+
+            <div class="brand-subtitle">
+                AI Cognitive & Memory Support
+            </div>
+        </div>
+
+
+        <div class="top-actions">
+
+            <button onclick="setLanguage('en')">
+                English
+            </button>
+
+            <button onclick="setLanguage('hi')">
+                हिन्दी
+            </button>
+
+            <button
+                class="emergency-btn"
+                onclick="emergencyHelp()">
+                🆘 Emergency
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div>
+
+                <h1 id="welcomeTitle">
+                    Welcome to MindMitra
+                </h1>
+
+                <p id="welcomeText">
+                    AI-powered cognitive support, memory assistance & daily wellness
+                </p>
+
+            </div>
+
+
+            <div
+                class="status-card"
+                id="aiStatus">
+
+                <span class="online-dot"></span>
+                AI Assistant Active
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         NAVIGATION
+    ========================================== -->
+
+    <nav class="navigation">
+
+        <button onclick="showSection('home')">
+            🏠 Home
+        </button>
+
+        <button onclick="showSection('games')">
+            🎮 Games
+        </button>
+
+        <button onclick="showSection('reminders')">
+            ⏰ Reminders
+        </button>
+
+        <button onclick="showSection('fitness')">
+            🚶 Walking
+        </button>
+
+        <button onclick="showSection('nearby')">
+            📍 Nearby Help
+        </button>
+
+        <button onclick="showSection('dashboard')">
+            📊 Dashboard
+        </button>
+
+    </nav>
+
+
+
+    <!-- =========================================
+         HOME SECTION
+    ========================================== -->
+
+    <main>
+
+        <section
+            id="home"
+            class="section active">
+
+            <div class="welcome-small">
+
+                <div>
+
+                    <div class="small-label">
+                        MINDMITRA
+                    </div>
+
+                    <h2 id="homeGreeting">
+                        Good Morning 👋
+                    </h2>
+
+                    <p id="homeDescription">
+                        Let's keep your mind and body active today.
+                    </p>
+
+                </div>
+
+
+                <div class="daily-score">
+
+                    <strong id="homeScore">
+                        0%
+                    </strong>
+
+                    <span>
+                        Daily Score
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- QUICK ACCESS -->
+
+            <h2 class="section-title">
+                Quick Access
+            </h2>
+
+
+            <div class="feature-grid">
+
+                <div
+                    class="feature-card"
+                    onclick="showSection('games')">
+
+                    <div class="feature-icon">
+                        🧠
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Cognitive Games
+                        </h3>
+
+                        <p>
+                            Train memory and attention
+                        </p>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    class="feature-card"
+                    onclick="showSection('reminders')">
+
+                    <div class="feature-icon">
+                        ⏰
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Reminders
+                        </h3>
+
+                        <p>
+                            Keep track of daily tasks
+                        </p>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    class="feature-card"
+                    onclick="showSection('fitness')">
+
+                    <div class="feature-icon">
+                        🚶
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Walking
+                        </h3>
+
+                        <p>
+                            Track your daily walking
+                        </p>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    class="feature-card"
+                    onclick="showSection('nearby')">
+
+                    <div class="feature-icon">
+                        📍
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Nearby Help
+                        </h3>
+
+                        <p>
+                            Find helpful places nearby
+                        </p>
+
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- AI INSIGHT -->
+
+            <div class="ai-insight">
+
+                <div class="ai-icon">
+                    🤖
+                </div>
+
+
+                <div class="ai-insight-content">
+
+                    <span>
+                        AI INSIGHT
+                    </span>
+
+                    <p id="aiHomeMessage">
+                        Complete a cognitive game to receive a personalized recommendation.
+                    </p>
+
+
+                    <div class="ai-chat-mini">
+
+                        <input
+                            type="text"
+                            id="aiQuestion"
+                            placeholder="Ask MindMitra..."
+                            onkeydown="if(event.key==='Enter') askMindMitra()"
+                        >
+
+                        <button onclick="askMindMitra()">
+                            ➤
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="ai-reply"
+                        id="aiReply">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTACT -->
+
+            <div class="contact-row">
+
+                <button onclick="contactDoctor()">
+                    👨‍⚕️ Contact Doctor
+                </button>
+
+                <button onclick="contactCaregiver()">
+                    👨‍👩‍👧 Contact Caregiver
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             GAMES SECTION
+        ========================================== -->
+
+        <section
+            id="games"
+            class="section">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span>
+                        COGNITIVE TRAINING
+                    </span>
+
+                    <h2>
+                        🧠 Cognitive Games
+                    </h2>
+
+                    <p class="description">
+                        Simple activities designed to exercise memory,
+                        attention and thinking.
+                    </p>
+
+                </div>
+
+
+                <div class="level-badge">
+
+                    AI Level
+
+                    <strong id="difficultyLevel">
+                        1
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DIFFICULTY -->
+
+            <div class="difficulty-panel">
+
+                <strong id="difficultyTitle">
+                    Current Level
+                </strong>
+
+                <p id="difficultyDescription">
+                    Starting with gentle cognitive exercises.
+                </p>
+
+
+                <div class="level-progress">
+
+                    <div id="levelProgress"></div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- GAME CARDS -->
+
+            <div class="game-grid">
+
+                <div class="game-card">
+
+                    <span>🃏</span>
+
+                    <strong>
+                        Memory Cards
+                    </strong>
+
+                    <small>
+                        Remember objects
+                    </small>
+
+                    <button onclick="memoryGame()">
+                        Start
+                    </button>
+
+                </div>
+
+
+
+                <div class="game-card">
+
+                    <span>🎨</span>
+
+                    <strong>
+                        Color Memory
+                    </strong>
+
+                    <small>
+                        Remember colors
+                    </small>
+
+                    <button onclick="colorGame()">
+                        Start
+                    </button>
+
+                </div>
+
+
+
+                <div class="game-card">
+
+                    <span>🔢</span>
+
+                    <strong>
+                        Number Sequence
+                    </strong>
+
+                    <small>
+                        Find missing number
+                    </small>
+
+                    <button onclick="numberGame()">
+                        Start
+                    </button>
+
+                </div>
+
+
+
+                <div class="game-card">
+
+                    <span>🖼️</span>
+
+                    <strong>
+                        Picture Recognition
+                    </strong>
+
+                    <small>
+                        Identify objects
+                    </small>
+
+                    <button onclick="pictureGame()">
+                        Start
+                    </button>
+
+                </div>
+
+
+
+                <div class="game-card">
+
+                    <span>👀</span>
+
+                    <strong>
+                        Attention Test
+                    </strong>
+
+                    <small>
+                        Find the difference
+                    </small>
+
+                    <button onclick="attentionGame()">
+                        Start
+                    </button>
+
+                </div>
+
+
+
+                <div class="game-card">
+
+                    <span>🧩</span>
+
+                    <strong>
+                        Complete Pattern
+                    </strong>
+
+                    <small>
+                        Find what comes next
+                    </small>
+
+                    <button onclick="patternGame()">
+                        Start
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- GAME AREA -->
+
+            <div
+                class="game-area"
+                id="gameArea">
+
+                <h2>
+                    🧠 Choose a Game
+                </h2>
+
+                <p>
+                    Select one of the activities above to begin.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             REMINDERS SECTION
+        ========================================== -->
+
+        <section
+            id="reminders"
+            class="section">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span>
+                        DAILY SUPPORT
+                    </span>
+
+                    <h2>
+                        ⏰ Reminders
+                    </h2>
+
+                    <p class="description">
+                        Keep track of important daily activities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="reminder-grid">
+
+
+                <div class="reminder-card">
+
+                    <div class="reminder-icon">
+                        💊
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Medicine
+                        </h3>
+
+                        <p>
+                            Take your scheduled medicine.
+                        </p>
+
+                    </div>
+
+                    <button onclick="completeReminder(this)">
+                        Done
+                    </button>
+
+                </div>
+
+
+
+                <div class="reminder-card">
+
+                    <div class="reminder-icon">
+                        💧
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Drink Water
+                        </h3>
+
+                        <p>
+                            Remember to stay hydrated.
+                        </p>
+
+                    </div>
+
+                    <button onclick="completeReminder(this)">
+                        Done
+                    </button>
+
+                </div>
+
+
+
+                <div class="reminder-card">
+
+                    <div class="reminder-icon">
+                        🍽️
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Meal
+                        </h3>
+
+                        <p>
+                            Remember your scheduled meal.
+                        </p>
+
+                    </div>
+
+                    <button onclick="completeReminder(this)">
+                        Done
+                    </button>
+
+                </div>
+
+
+
+                <div class="reminder-card">
+
+                    <div class="reminder-icon">
+                        🚶
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Walking
+                        </h3>
+
+                        <p>
+                            Take some time for a gentle walk.
+                        </p>
+
+                    </div>
+
+                    <button onclick="completeReminder(this)">
+                        Done
+                    </button>
+
+                </div>
+
+
+
+                <div class="reminder-card">
+
+                    <div class="reminder-icon">
+                        🧘
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Relaxation
+                        </h3>
+
+                        <p>
+                            Take a short break and relax.
+                        </p>
+
+                    </div>
+
+                    <button onclick="completeReminder(this)">
+                        Done
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="performance-box">
+
+                <div class="performance-line">
+
+                    <strong>
+                        Completed Reminders
+                    </strong>
+
+                    <strong id="reminderDone">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             FITNESS / WALKING SECTION
+        ========================================== -->
+
+        <section
+            id="fitness"
+            class="section">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span>
+                        DAILY WELLNESS
+                    </span>
+
+                    <h2>
+                        🚶 Walking Tracker
+                    </h2>
+
+                    <p class="description">
+                        Track your walking distance using GPS.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="fitness-grid">
+
+
+                <div class="fitness-main">
+
+                    <div class="fitness-header">
+
+                        <div>
+
+                            <h2>
+                                Today's Activity
+                            </h2>
+
+                            <p id="locationStatus">
+                                📍 Walking tracker is ready.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="fitness-stats">
+
+                        <div>
+
+                            <strong id="distance">
+                                0.00
+                            </strong>
+
+                            <small>
+                                Kilometers
+                            </small>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong id="steps">
+                                0
+                            </strong>
+
+                            <small>
+                                Estimated Steps
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="progress-bar">
+
+                        <div
+                            id="walkingProgress">
+                        </div>
+
+                    </div>
+
+
+                    <br>
+
+
+                    <button onclick="startWalking()">
+                        ▶ Start Walking
+                    </button>
+
+                    <button
+                        class="secondary"
+                        onclick="stopWalking()">
+                        ⏹ Stop
+                    </button>
+
+                </div>
+
+
+
+                <div class="fitness-side">
+
+                    <h3>
+                        🌿 Walking Tips
+                    </h3>
+
+                    <div class="tip">
+                        Walk at a comfortable pace.
+                    </div>
+
+                    <div class="tip">
+                        Stay hydrated.
+                    </div>
+
+                    <div class="tip">
+                        Choose a safe walking area.
+                    </div>
+
+                    <div class="tip">
+                        Take breaks when needed.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             NEARBY HELP SECTION
+        ========================================== -->
+
+        <section
+            id="nearby"
+            class="section">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span>
+                        LOCATION SUPPORT
+                    </span>
+
+                    <h2>
+                        📍 Nearby Help
+                    </h2>
+
+                    <p class="description">
+                        Find useful services around your current location.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="place-grid">
+
+                <button onclick="findNearby('ATM')">
+                    🏧
+                    <span>ATM</span>
+                </button>
+
+                <button onclick="findNearby('Petrol Pump')">
+                    ⛽
+                    <span>Petrol Pump</span>
+                </button>
+
+                <button onclick="findNearby('Hospital')">
+                    🏥
+                    <span>Hospital</span>
+                </button>
+
+                <button onclick="findNearby('Pharmacy')">
+                    💊
+                    <span>Pharmacy</span>
+                </button>
+
+                <button onclick="findNearby('Police Station')">
+                    👮
+                    <span>Police Station</span>
+                </button>
+
+                <button onclick="findNearby('Restaurant')">
+                    🍽️
+                    <span>Restaurant</span>
+                </button>
+
+            </div>
+
+
+
+            <div
+                class="map-box"
+                id="mapResult">
+
+                <div class="map-icon">
+                    🗺️
+                </div>
+
+                <h3>
+                    Nearby Services
+                </h3>
+
+                <p>
+                    Select a category above to search nearby.
+                </p>
+
+            </div>
+
+
+
+            <div class="travel-note">
+
+                <strong>
+                    📌 Location Note
+                </strong>
+
+                <p>
+                    MindMitra uses your browser location
+                    permission for nearby assistance.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             DASHBOARD SECTION
+        ========================================== -->
+
+        <section
+            id="dashboard"
+            class="section">
+
+            <div class="page-heading">
+
+                <div>
+
+                    <span>
+                        PROGRESS
+                    </span>
+
+                    <h2>
+                        📊 My Dashboard
+                    </h2>
+
+                    <p class="description">
+                        View your cognitive and daily wellness progress.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="dashboard-grid">
+
+
+                <div class="dashboard-card">
+
+                    <span>
+                        🎮
+                    </span>
+
+                    <small>
+                        Games Completed
+                    </small>
+
+                    <strong id="dashboardGames">
+                        0
+                    </strong>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <span>
+                        🏆
+                    </span>
+
+                    <small>
+                        Average Score
+                    </small>
+
+                    <strong id="dashboardScore">
+                        0%
+                    </strong>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <span>
+                        🧠
+                    </span>
+
+                    <small>
+                        Memory Status
+                    </small>
+
+                    <strong id="memoryStatus">
+                        —
+                    </strong>
+
+                </div>
+
+
+
+                <div class="dashboard-card">
+
+                    <span>
+                        📈
+                    </span>
+
+                    <small>
+                        AI Difficulty
+                    </small>
+
+                    <strong id="dashboardLevel">
+                        Level 1
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="performance-box">
+
+                <h3>
+                    📋 Performance Summary
+                </h3>
+
+
+                <div class="performance-line">
+
+                    <span>
+                        Games Completed
+                    </span>
+
+                    <strong id="dashboardGames2">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="performance-line">
+
+                    <span>
+                        Average Score
+                    </span>
+
+                    <strong id="dashboardScore2">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="performance-line">
+
+                    <span>
+                        Walking Distance
+                    </span>
+
+                    <strong id="dashboardWalk">
+                        0.00 km
+                    </strong>
+
+                </div>
+
+
+                <div class="performance-line">
+
+                    <span>
+                        Reminders Completed
+                    </span>
+
+                    <strong id="dashboardReminders">
+                        0/5
+                    </strong>
+
+                </div>
+
+
+                <div class="performance-line">
+
+                    <span>
+                        AI Difficulty Level
+                    </span>
+
+                    <strong id="dashboardLevel2">
+                        Level 1
+                    </strong>
+
+                </div>
+
+
+                <div class="performance-line">
+
+                    <span>
+                        AI Recommendation
+                    </span>
+
+                    <strong id="dashboardRecommendation">
+                        Complete a cognitive game to receive a personalized recommendation.
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DOCTOR / CAREGIVER -->
+
+            <div class="doctor-box">
+
+                <div>
+
+                    <h3>
+                        👨‍⚕️ Support Team
+                    </h3>
+
+                    <p>
+                        Connect with your doctor or caregiver when needed.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <button onclick="contactDoctor()">
+                        Doctor
+                    </button>
+
+                    <button onclick="contactCaregiver()">
+                        Caregiver
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="user-badge">
+
+                👤 MindMitra User
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 MindMitra — AI Cognitive & Memory Assistance Platform
+        </p>
+
+        <small>
+            Designed for cognitive support, daily wellness and caregiver assistance.
+        </small>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

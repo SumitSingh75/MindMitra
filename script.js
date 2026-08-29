@@ -1,10 +1,10 @@
-/* ========================================= 
-   MINDMITRA - COMPLETE JAVASCRIPT 
+/* =========================================
+   MINDMITRA - COMPLETE JAVASCRIPT
 ========================================= */
 
 
-/* ========================================= 
-   GLOBAL VARIABLES 
+/* =========================================
+   GLOBAL VARIABLES
 ========================================= */
 
 let hindiMode = false;
@@ -14,13 +14,14 @@ let completedReminders = 0;
 let gamesCompleted = 0;
 let totalScore = 0;
 
-/* 
-   Level 1 = very easy 
-   Level 2 = easy 
-   Level 3 = moderate 
-   Level 4 = challenging 
-   Level 5 = advanced 
+/*
+   Level 1 = very easy
+   Level 2 = easy
+   Level 3 = moderate
+   Level 4 = challenging
+   Level 5 = advanced
 */
+
 let difficulty = 1;
 
 let watchID = null;
@@ -33,8 +34,8 @@ let colorSequence = [];
 let patternAnswerValue = null;
 
 
-/* ========================================= 
-   TRANSLATION 
+/* =========================================
+   TRANSLATION
 ========================================= */
 
 function t(en, hi) {
@@ -42,8 +43,8 @@ function t(en, hi) {
 }
 
 
-/* ========================================= 
-   COMPLETE WEBSITE LANGUAGE SWITCH 
+/* =========================================
+   COMPLETE WEBSITE LANGUAGE SWITCH
 ========================================= */
 
 function setLanguage(language) {
@@ -55,10 +56,8 @@ function setLanguage(language) {
 
 
     /*
-       This is the important part.
-
-       Every element containing data-en and data-hi
-       will automatically change.
+       Elements containing data-en and data-hi
+       can automatically change language.
     */
 
     document.querySelectorAll("[data-en]").forEach(element => {
@@ -107,11 +106,6 @@ function setLanguage(language) {
 
     /* Home */
 
-    /*
-       Update the time-based greeting whenever
-       the language is changed.
-    */
-
     updateGreeting();
 
 
@@ -128,9 +122,7 @@ function setLanguage(language) {
     }
 
 
-    /*
-       Change input placeholder.
-    */
+    /* Input placeholder */
 
     const input =
         document.getElementById("aiQuestion");
@@ -146,8 +138,7 @@ function setLanguage(language) {
 
 
     /*
-       Rebuild any currently running game
-       so its text also changes language.
+       Update all dynamic text.
     */
 
     updateDifficultyUI();
@@ -157,12 +148,11 @@ function setLanguage(language) {
     updateWalkingText();
 
     updateNearbyText();
-
 }
 
 
-/* ========================================= 
-   AI STATUS 
+/* =========================================
+   AI STATUS
 ========================================= */
 
 function updateAIStatus() {
@@ -187,7 +177,7 @@ function updateAIStatus() {
 }
 
 
-/* ========================================= 
+/* =========================================
    HOME TIME GREETING
 ========================================= */
 
@@ -246,11 +236,7 @@ function updateGreeting() {
 
 
 /*
-   Automatically check the time every minute.
-
-   This means if the website is already open and
-   the time changes from morning to afternoon,
-   the greeting will update automatically.
+   Automatically update greeting every minute.
 */
 
 setInterval(() => {
@@ -260,8 +246,8 @@ setInterval(() => {
 }, 60000);
 
 
-/* ========================================= 
-   SECTION NAVIGATION 
+/* =========================================
+   SECTION NAVIGATION
 ========================================= */
 
 function showSection(sectionId) {
@@ -290,8 +276,8 @@ function showSection(sectionId) {
 }
 
 
-/* ========================================= 
-   REMINDERS 
+/* =========================================
+   REMINDERS
 ========================================= */
 
 function completeReminder(button) {
@@ -337,8 +323,8 @@ function completeReminder(button) {
 }
 
 
-/* ========================================= 
-   EMERGENCY / CONTACT 
+/* =========================================
+   EMERGENCY / CONTACT
 ========================================= */
 
 function emergencyHelp() {
@@ -374,8 +360,8 @@ function contactCaregiver() {
 }
 
 
-/* ========================================= 
-   AI DIFFICULTY SYSTEM 
+/* =========================================
+   AI DIFFICULTY SYSTEM
 ========================================= */
 
 function recordGame(score) {
@@ -392,14 +378,9 @@ function recordGame(score) {
 
 
     /*
-       Difficulty logic.
-
-       Good performance repeatedly increases
-       difficulty.
-
-       Low performance decreases it.
-
-       Moderate performance keeps it.
+       Good performance increases difficulty.
+       Low performance decreases difficulty.
+       Moderate performance keeps current level.
     */
 
     if (score >= 80 && difficulty < 5) {
@@ -514,8 +495,8 @@ function recordGame(score) {
 }
 
 
-/* ========================================= 
-   DASHBOARD 
+/* =========================================
+   DASHBOARD
 ========================================= */
 
 function updateDashboard(average) {
@@ -528,11 +509,27 @@ function updateDashboard(average) {
     }
 
 
+    const games2 =
+        document.getElementById("dashboardGames2");
+
+    if (games2) {
+        games2.innerText = gamesCompleted;
+    }
+
+
     const score =
         document.getElementById("dashboardScore");
 
     if (score) {
         score.innerText = average + "%";
+    }
+
+
+    const score2 =
+        document.getElementById("dashboardScore2");
+
+    if (score2) {
+        score2.innerText = average + "%";
     }
 
 
@@ -545,8 +542,8 @@ function updateDashboard(average) {
 }
 
 
-/* ========================================= 
-   DIFFICULTY UI 
+/* =========================================
+   DIFFICULTY UI
 ========================================= */
 
 function updateDifficultyUI() {
@@ -565,6 +562,19 @@ function updateDifficultyUI() {
     if (dashboardLevel) {
 
         dashboardLevel.innerText =
+            t(
+                "Level " + difficulty,
+                "स्तर " + difficulty
+            );
+    }
+
+
+    const dashboardLevel2 =
+        document.getElementById("dashboardLevel2");
+
+    if (dashboardLevel2) {
+
+        dashboardLevel2.innerText =
             t(
                 "Level " + difficulty,
                 "स्तर " + difficulty
@@ -657,8 +667,8 @@ function updateDifficultyUI() {
 }
 
 
-/* ========================================= 
-   MEMORY GAME 
+/* =========================================
+   MEMORY GAME
 ========================================= */
 
 function memoryGame() {
@@ -808,8 +818,8 @@ function memoryAnswer(answer, target) {
 }
 
 
-/* ========================================= 
-   COLOR MEMORY 
+/* =========================================
+   COLOR MEMORY
 ========================================= */
 
 function colorGame() {
@@ -915,10 +925,6 @@ function colorQuestion() {
         );
 
 
-    const target =
-        colorSequence[targetIndex];
-
-
     document.getElementById("gameArea").innerHTML = `
 
         <h2>
@@ -979,8 +985,8 @@ function colorAnswer(answer) {
 }
 
 
-/* ========================================= 
-   NUMBER SEQUENCE 
+/* =========================================
+   NUMBER SEQUENCE
 ========================================= */
 
 function numberGame() {
@@ -1087,8 +1093,8 @@ function numberAnswer(answer, correctAnswer) {
 }
 
 
-/* ========================================= 
-   PICTURE RECOGNITION 
+/* =========================================
+   PICTURE RECOGNITION
 ========================================= */
 
 function pictureGame() {
@@ -1193,8 +1199,8 @@ function pictureAnswer(correct) {
 }
 
 
-/* ========================================= 
-   ATTENTION GAME 
+/* =========================================
+   ATTENTION GAME
 ========================================= */
 
 function attentionGame() {
@@ -1269,8 +1275,8 @@ function attentionAnswer(correct) {
 }
 
 
-/* ========================================= 
-   COMPLETE THE PATTERN 
+/* =========================================
+   COMPLETE THE PATTERN
 ========================================= */
 
 function patternGame() {
@@ -1388,8 +1394,8 @@ function patternAnswer(answer) {
 }
 
 
-/* ========================================= 
-   GAME RESULT 
+/* =========================================
+   GAME RESULT
 ========================================= */
 
 function showGameResult(score) {
@@ -1467,8 +1473,8 @@ function showGameResult(score) {
 }
 
 
-/* ========================================= 
-   WALKING 
+/* =========================================
+   WALKING
 ========================================= */
 
 function calculateDistance(
@@ -1751,8 +1757,8 @@ function updateWalkingText() {
 }
 
 
-/* ========================================= 
-   NEARBY HELP 
+/* =========================================
+   NEARBY HELP
 ========================================= */
 
 function findNearby(place) {
@@ -1942,16 +1948,15 @@ function getLocation() {
 function updateNearbyText() {
 
     /*
-       Nearby results are regenerated when the user
-       selects a nearby category, so no stale
-       English navigation text remains.
+       Nearby results are generated when a category
+       is selected.
     */
 
 }
 
 
-/* ========================================= 
-   DEMO AI ASSISTANT 
+/* =========================================
+   DEMO AI ASSISTANT
 ========================================= */
 
 function askMindMitra() {
@@ -2012,8 +2017,8 @@ function askMindMitra() {
 }
 
 
-/* ========================================= 
-   INITIAL PAGE LOAD 
+/* =========================================
+   INITIAL PAGE LOAD
 ========================================= */
 
 document.addEventListener(
@@ -2028,20 +2033,16 @@ document.addEventListener(
 
         updateWalkingText();
 
-        /*
-           IMPORTANT:
-           Set the greeting immediately when
-           the website loads.
-        */
-
         updateGreeting();
+
+        updateDashboard(0);
 
     }
 );
 
 
-/* ========================================= 
-   INITIAL AI MESSAGE 
+/* =========================================
+   INITIAL AI MESSAGE
 ========================================= */
 
 function updateAIRecommendation() {
