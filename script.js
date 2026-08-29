@@ -1,10 +1,10 @@
-/* =========================================
-   MINDMITRA - COMPLETE JAVASCRIPT
+/* ========================================= 
+   MINDMITRA - COMPLETE JAVASCRIPT 
 ========================================= */
 
 
-/* =========================================
-   GLOBAL VARIABLES
+/* ========================================= 
+   GLOBAL VARIABLES 
 ========================================= */
 
 let hindiMode = false;
@@ -14,12 +14,12 @@ let completedReminders = 0;
 let gamesCompleted = 0;
 let totalScore = 0;
 
-/*
-   Level 1 = very easy
-   Level 2 = easy
-   Level 3 = moderate
-   Level 4 = challenging
-   Level 5 = advanced
+/* 
+   Level 1 = very easy 
+   Level 2 = easy 
+   Level 3 = moderate 
+   Level 4 = challenging 
+   Level 5 = advanced 
 */
 let difficulty = 1;
 
@@ -33,8 +33,8 @@ let colorSequence = [];
 let patternAnswerValue = null;
 
 
-/* =========================================
-   TRANSLATION
+/* ========================================= 
+   TRANSLATION 
 ========================================= */
 
 function t(en, hi) {
@@ -42,8 +42,8 @@ function t(en, hi) {
 }
 
 
-/* =========================================
-   COMPLETE WEBSITE LANGUAGE SWITCH
+/* ========================================= 
+   COMPLETE WEBSITE LANGUAGE SWITCH 
 ========================================= */
 
 function setLanguage(language) {
@@ -104,56 +104,28 @@ function setLanguage(language) {
 
     updateAIStatus();
 
-/* Home */
 
-function updateGreeting() {
+    /* Home */
 
-    const greeting = document.getElementById("homeGreeting");
+    /*
+       Update the time-based greeting whenever
+       the language is changed.
+    */
 
-    if (!greeting) return;
+    updateGreeting();
 
-    const hour = new Date().getHours();
 
-    let englishGreeting;
-    let hindiGreeting;
+    const homeDescription =
+        document.getElementById("homeDescription");
 
-    if (hour >= 5 && hour < 12) {
+    if (homeDescription) {
 
-        englishGreeting = "Good Morning 👋";
-        hindiGreeting = "सुप्रभात 👋";
-
-    } else if (hour >= 12 && hour < 17) {
-
-        englishGreeting = "Good Afternoon 👋";
-        hindiGreeting = "नमस्कार 👋";
-
-    } else if (hour >= 17 && hour < 21) {
-
-        englishGreeting = "Good Evening 👋";
-        hindiGreeting = "शुभ संध्या 👋";
-
-    } else {
-
-        englishGreeting = "Good Night 👋";
-        hindiGreeting = "शुभ रात्रि 👋";
+        homeDescription.innerText =
+            t(
+                "Let's keep your mind and body active today.",
+                "आज अपने मन और शरीर को सक्रिय रखें।"
+            );
     }
-
-    greeting.innerText =
-        hindiMode ? hindiGreeting : englishGreeting;
-}
-
-
-const homeDescription =
-    document.getElementById("homeDescription");
-
-if (homeDescription) {
-
-    homeDescription.innerText =
-        t(
-            "Let's keep your mind and body active today.",
-            "आज अपने मन और शरीर को सक्रिय रखें।"
-        );
-}
 
 
     /*
@@ -189,8 +161,8 @@ if (homeDescription) {
 }
 
 
-/* =========================================
-   AI STATUS
+/* ========================================= 
+   AI STATUS 
 ========================================= */
 
 function updateAIStatus() {
@@ -215,8 +187,81 @@ function updateAIStatus() {
 }
 
 
-/* =========================================
-   SECTION NAVIGATION
+/* ========================================= 
+   HOME TIME GREETING
+========================================= */
+
+function updateGreeting() {
+
+    const greeting =
+        document.getElementById("homeGreeting");
+
+    if (!greeting) {
+        return;
+    }
+
+
+    const hour =
+        new Date().getHours();
+
+
+    let englishGreeting;
+    let hindiGreeting;
+
+
+    if (hour >= 5 && hour < 12) {
+
+        englishGreeting = "Good Morning 👋";
+        hindiGreeting = "सुप्रभात 👋";
+
+    }
+
+    else if (hour >= 12 && hour < 17) {
+
+        englishGreeting = "Good Afternoon 👋";
+        hindiGreeting = "नमस्कार 👋";
+
+    }
+
+    else if (hour >= 17 && hour < 21) {
+
+        englishGreeting = "Good Evening 👋";
+        hindiGreeting = "शुभ संध्या 👋";
+
+    }
+
+    else {
+
+        englishGreeting = "Good Night 👋";
+        hindiGreeting = "शुभ रात्रि 👋";
+
+    }
+
+
+    greeting.innerText =
+        hindiMode
+            ? hindiGreeting
+            : englishGreeting;
+}
+
+
+/*
+   Automatically check the time every minute.
+
+   This means if the website is already open and
+   the time changes from morning to afternoon,
+   the greeting will update automatically.
+*/
+
+setInterval(() => {
+
+    updateGreeting();
+
+}, 60000);
+
+
+/* ========================================= 
+   SECTION NAVIGATION 
 ========================================= */
 
 function showSection(sectionId) {
@@ -245,8 +290,8 @@ function showSection(sectionId) {
 }
 
 
-/* =========================================
-   REMINDERS
+/* ========================================= 
+   REMINDERS 
 ========================================= */
 
 function completeReminder(button) {
@@ -292,8 +337,8 @@ function completeReminder(button) {
 }
 
 
-/* =========================================
-   EMERGENCY / CONTACT
+/* ========================================= 
+   EMERGENCY / CONTACT 
 ========================================= */
 
 function emergencyHelp() {
@@ -329,8 +374,8 @@ function contactCaregiver() {
 }
 
 
-/* =========================================
-   AI DIFFICULTY SYSTEM
+/* ========================================= 
+   AI DIFFICULTY SYSTEM 
 ========================================= */
 
 function recordGame(score) {
@@ -362,6 +407,7 @@ function recordGame(score) {
         difficulty++;
 
     }
+
     else if (score < 50 && difficulty > 1) {
 
         difficulty--;
@@ -386,6 +432,7 @@ function recordGame(score) {
                 "बहुत अच्छा! AI ने अगले अभ्यास की कठिनाई बढ़ा दी है।"
             );
 
+
         memoryStatus =
             t(
                 "Strong",
@@ -393,6 +440,7 @@ function recordGame(score) {
             );
 
     }
+
     else if (score >= 50) {
 
         recommendation =
@@ -401,6 +449,7 @@ function recordGame(score) {
                 "अच्छा प्रयास। वर्तमान कठिनाई स्तर जारी रहेगा।"
             );
 
+
         memoryStatus =
             t(
                 "Moderate",
@@ -408,6 +457,7 @@ function recordGame(score) {
             );
 
     }
+
     else {
 
         recommendation =
@@ -415,6 +465,7 @@ function recordGame(score) {
                 "The AI has reduced the challenge to provide gentler practice.",
                 "AI ने अभ्यास को थोड़ा आसान कर दिया है।"
             );
+
 
         memoryStatus =
             t(
@@ -463,6 +514,10 @@ function recordGame(score) {
 }
 
 
+/* ========================================= 
+   DASHBOARD 
+========================================= */
+
 function updateDashboard(average) {
 
     const games =
@@ -490,8 +545,8 @@ function updateDashboard(average) {
 }
 
 
-/* =========================================
-   DIFFICULTY UI
+/* ========================================= 
+   DIFFICULTY UI 
 ========================================= */
 
 function updateDifficultyUI() {
@@ -602,8 +657,8 @@ function updateDifficultyUI() {
 }
 
 
-/* =========================================
-   MEMORY GAME
+/* ========================================= 
+   MEMORY GAME 
 ========================================= */
 
 function memoryGame() {
@@ -617,24 +672,28 @@ function memoryGame() {
             ["🍎", "🏠", "🐘"];
 
     }
+
     else if (difficulty === 2) {
 
         items =
             ["🍎", "🏠", "🐘", "🚲"];
 
     }
+
     else if (difficulty === 3) {
 
         items =
             ["🍎", "🏠", "🐘", "🚲", "⭐"];
 
     }
+
     else if (difficulty === 4) {
 
         items =
             ["🍎", "🏠", "🐘", "🚲", "⭐", "🌳"];
 
     }
+
     else {
 
         items =
@@ -749,8 +808,8 @@ function memoryAnswer(answer, target) {
 }
 
 
-/* =========================================
-   COLOR MEMORY
+/* ========================================= 
+   COLOR MEMORY 
 ========================================= */
 
 function colorGame() {
@@ -872,8 +931,7 @@ function colorQuestion() {
         <p>
             ${t(
                 "Which color was in position " +
-                (targetIndex + 1) +
-                "?",
+                (targetIndex + 1) + "?",
                 "स्थान " +
                 (targetIndex + 1) +
                 " पर कौन सा रंग था?"
@@ -883,19 +941,19 @@ function colorQuestion() {
         <div class="game-options">
 
             <button onclick="colorAnswer('red')">
-                🔴 ${t("Red","लाल")}
+                🔴 ${t("Red", "लाल")}
             </button>
 
             <button onclick="colorAnswer('green')">
-                🟢 ${t("Green","हरा")}
+                🟢 ${t("Green", "हरा")}
             </button>
 
             <button onclick="colorAnswer('blue')">
-                🔵 ${t("Blue","नीला")}
+                🔵 ${t("Blue", "नीला")}
             </button>
 
             <button onclick="colorAnswer('yellow')">
-                🟡 ${t("Yellow","पीला")}
+                🟡 ${t("Yellow", "पीला")}
             </button>
 
         </div>
@@ -921,8 +979,8 @@ function colorAnswer(answer) {
 }
 
 
-/* =========================================
-   NUMBER SEQUENCE
+/* ========================================= 
+   NUMBER SEQUENCE 
 ========================================= */
 
 function numberGame() {
@@ -1029,8 +1087,8 @@ function numberAnswer(answer, correctAnswer) {
 }
 
 
-/* =========================================
-   PICTURE RECOGNITION
+/* ========================================= 
+   PICTURE RECOGNITION 
 ========================================= */
 
 function pictureGame() {
@@ -1135,13 +1193,14 @@ function pictureAnswer(correct) {
 }
 
 
-/* =========================================
-   ATTENTION GAME
+/* ========================================= 
+   ATTENTION GAME 
 ========================================= */
 
 function attentionGame() {
 
     const normal = "🍎";
+
 
     const different =
         difficulty >= 4
@@ -1190,11 +1249,11 @@ function attentionGame() {
         <div class="game-options">
 
             <button onclick="attentionAnswer(${different === "🍊"})">
-                🍊 ${t("Orange","संतरा")}
+                🍊 ${t("Orange", "संतरा")}
             </button>
 
             <button onclick="attentionAnswer(false)">
-                🍎 ${t("Apple","सेब")}
+                🍎 ${t("Apple", "सेब")}
             </button>
 
         </div>
@@ -1210,8 +1269,8 @@ function attentionAnswer(correct) {
 }
 
 
-/* =========================================
-   COMPLETE THE PATTERN
+/* ========================================= 
+   COMPLETE THE PATTERN 
 ========================================= */
 
 function patternGame() {
@@ -1329,8 +1388,8 @@ function patternAnswer(answer) {
 }
 
 
-/* =========================================
-   GAME RESULT
+/* ========================================= 
+   GAME RESULT 
 ========================================= */
 
 function showGameResult(score) {
@@ -1350,6 +1409,7 @@ function showGameResult(score) {
             );
 
     }
+
     else {
 
         message =
@@ -1369,7 +1429,7 @@ function showGameResult(score) {
         </div>
 
         <h3>
-            ${t("Score","स्कोर")}: ${score}%
+            ${t("Score", "स्कोर")}: ${score}%
         </h3>
 
         <p>
@@ -1407,8 +1467,8 @@ function showGameResult(score) {
 }
 
 
-/* =========================================
-   WALKING
+/* ========================================= 
+   WALKING 
 ========================================= */
 
 function calculateDistance(
@@ -1420,13 +1480,16 @@ function calculateDistance(
 
     const R = 6371;
 
+
     const dLat =
         (lat2 - lat1) *
         Math.PI / 180;
 
+
     const dLon =
         (lon2 - lon1) *
         Math.PI / 180;
+
 
     const a =
         Math.sin(dLat / 2) ** 2 +
@@ -1439,6 +1502,7 @@ function calculateDistance(
         ) *
 
         Math.sin(dLon / 2) ** 2;
+
 
     return R *
         2 *
@@ -1535,6 +1599,7 @@ function startWalking() {
                 }
 
             },
+
 
             {
                 enableHighAccuracy: true,
@@ -1670,6 +1735,7 @@ function updateWalkingText() {
             "locationStatus"
         );
 
+
     if (
         status &&
         !watchID
@@ -1680,12 +1746,13 @@ function updateWalkingText() {
                 "📍 Walking tracker is ready.",
                 "📍 चलने की ट्रैकिंग तैयार है।"
             );
+
     }
 }
 
 
-/* =========================================
-   NEARBY HELP
+/* ========================================= 
+   NEARBY HELP 
 ========================================= */
 
 function findNearby(place) {
@@ -1788,6 +1855,7 @@ function getLocation() {
             const lat =
                 position.coords.latitude;
 
+
             const lon =
                 position.coords.longitude;
 
@@ -1882,8 +1950,8 @@ function updateNearbyText() {
 }
 
 
-/* =========================================
-   DEMO AI ASSISTANT
+/* ========================================= 
+   DEMO AI ASSISTANT 
 ========================================= */
 
 function askMindMitra() {
@@ -1944,8 +2012,8 @@ function askMindMitra() {
 }
 
 
-/* =========================================
-   INITIAL PAGE LOAD
+/* ========================================= 
+   INITIAL PAGE LOAD 
 ========================================= */
 
 document.addEventListener(
@@ -1960,14 +2028,20 @@ document.addEventListener(
 
         updateWalkingText();
 
+        /*
+           IMPORTANT:
+           Set the greeting immediately when
+           the website loads.
+        */
+
         updateGreeting();
 
     }
 );
 
 
-/* =========================================
-   INITIAL AI MESSAGE
+/* ========================================= 
+   INITIAL AI MESSAGE 
 ========================================= */
 
 function updateAIRecommendation() {
