@@ -104,33 +104,56 @@ function setLanguage(language) {
 
     updateAIStatus();
 
+/* Home */
 
-    /* Home */
+function updateGreeting() {
 
-    const greeting =
-        document.getElementById("homeGreeting");
+    const greeting = document.getElementById("homeGreeting");
 
-    if (greeting) {
+    if (!greeting) return;
 
-        greeting.innerText =
-            t(
-                "Good Morning 👋",
-                "सुप्रभात 👋"
-            );
+    const hour = new Date().getHours();
+
+    let englishGreeting;
+    let hindiGreeting;
+
+    if (hour >= 5 && hour < 12) {
+
+        englishGreeting = "Good Morning 👋";
+        hindiGreeting = "सुप्रभात 👋";
+
+    } else if (hour >= 12 && hour < 17) {
+
+        englishGreeting = "Good Afternoon 👋";
+        hindiGreeting = "नमस्कार 👋";
+
+    } else if (hour >= 17 && hour < 21) {
+
+        englishGreeting = "Good Evening 👋";
+        hindiGreeting = "शुभ संध्या 👋";
+
+    } else {
+
+        englishGreeting = "Good Night 👋";
+        hindiGreeting = "शुभ रात्रि 👋";
     }
 
+    greeting.innerText =
+        hindiMode ? hindiGreeting : englishGreeting;
+}
 
-    const homeDescription =
-        document.getElementById("homeDescription");
 
-    if (homeDescription) {
+const homeDescription =
+    document.getElementById("homeDescription");
 
-        homeDescription.innerText =
-            t(
-                "Let's keep your mind and body active today.",
-                "आज अपने मन और शरीर को सक्रिय रखें।"
-            );
-    }
+if (homeDescription) {
+
+    homeDescription.innerText =
+        t(
+            "Let's keep your mind and body active today.",
+            "आज अपने मन और शरीर को सक्रिय रखें।"
+        );
+}
 
 
     /*
@@ -1936,6 +1959,8 @@ document.addEventListener(
         updateDifficultyUI();
 
         updateWalkingText();
+
+        updateGreeting();
 
     }
 );
