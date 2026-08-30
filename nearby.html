@@ -61,44 +61,34 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
    <script>
-    let map;
-    let userLat;
-    let userLng;
-
     navigator.geolocation.getCurrentPosition(
-
         function(position) {
 
-            userLat = position.coords.latitude;
-            userLng = position.coords.longitude;
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
 
-            map = L.map("map").setView(
-                [userLat, userLng],
-                15
-            );
+            const map = L.map("map");
+
+            map.setView([lat, lng], 15);
 
             L.tileLayer(
                 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
-                    attribution:
-                        "© OpenStreetMap contributors"
+                    attribution: "© OpenStreetMap contributors"
                 }
             ).addTo(map);
 
-            L.marker([userLat, userLng])
+            L.marker([lat, lng])
                 .addTo(map)
                 .bindPopup("📍 You are here")
                 .openPopup();
+
         },
 
         function(error) {
-
-            alert(
-                "Please allow location access to use Nearby Help."
-            );
-
+            alert("Location permission is required.");
+            console.log(error);
         }
-
     );
 </script>
 
